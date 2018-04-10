@@ -15,7 +15,7 @@ BiocStyle::latex()
 
 
 ###################################################
-### code chunk number 3: RandomWalkRestartMH1.Rnw:144-152
+### code chunk number 3: RandomWalkRestartMH1.Rnw:145-153
 ###################################################
 library(RandomWalkRestartMH)
 library(igraph)
@@ -28,14 +28,14 @@ PPI_MultiplexObject
 
 
 ###################################################
-### code chunk number 4: RandomWalkRestartMH1.Rnw:158-160
+### code chunk number 4: RandomWalkRestartMH1.Rnw:159-161
 ###################################################
 AdjMatrix_PPI <- compute.adjacency.matrix(PPI_MultiplexObject)
 AdjMatrixNorm_PPI <- normalize.multiplex.adjacency(AdjMatrix_PPI)
 
 
 ###################################################
-### code chunk number 5: RandomWalkRestartMH1.Rnw:167-173
+### code chunk number 5: RandomWalkRestartMH1.Rnw:168-174
 ###################################################
 SeedGene <- c("PIK3R1")
 ## We launch the algorithm with the default parameters (See details on manual)
@@ -46,7 +46,7 @@ RWR_PPI_Results
 
 
 ###################################################
-### code chunk number 6: RandomWalkRestartMH1.Rnw:181-185
+### code chunk number 6: RandomWalkRestartMH1.Rnw:182-186
 ###################################################
 ## In this case we select to induce a network with the Top 15 genes.
 TopResults_PPI <-
@@ -65,7 +65,7 @@ plot(TopResults_PPI, vertex.label.color="black",vertex.frame.color="#ffffff",
 
 
 ###################################################
-### code chunk number 8: RandomWalkRestartMH1.Rnw:221-239
+### code chunk number 8: RandomWalkRestartMH1.Rnw:222-240
 ###################################################
 data(Disease_Network) # We load our disease Network
 
@@ -88,13 +88,13 @@ PPI_Disease_Net
 
 
 ###################################################
-### code chunk number 9: RandomWalkRestartMH1.Rnw:246-247
+### code chunk number 9: RandomWalkRestartMH1.Rnw:247-248
 ###################################################
 PPIHetTranMatrix <- compute.transition.matrix(PPI_Disease_Net)
 
 
 ###################################################
-### code chunk number 10: RandomWalkRestartMH1.Rnw:254-263
+### code chunk number 10: RandomWalkRestartMH1.Rnw:255-264
 ###################################################
 SeedDisease <- c("269880")
 
@@ -108,7 +108,7 @@ RWRH_PPI_Disease_Results
 
 
 ###################################################
-### code chunk number 11: RandomWalkRestartMH1.Rnw:270-275
+### code chunk number 11: RandomWalkRestartMH1.Rnw:271-276
 ###################################################
 ## In this case we select to induce a network with the Top 10 genes
 ## and the Top 10 diseases.
@@ -138,7 +138,7 @@ plot(TopResults_PPI_Disease, vertex.label.color="black",
 
 
 ###################################################
-### code chunk number 13: RandomWalkRestartMH1.Rnw:326-332
+### code chunk number 13: RandomWalkRestartMH1.Rnw:327-333
 ###################################################
 data(Pathway_Network) # We load the Pathway Network
 
@@ -149,14 +149,14 @@ PPI_PATH_Multiplex
 
 
 ###################################################
-### code chunk number 14: RandomWalkRestartMH1.Rnw:338-340
+### code chunk number 14: RandomWalkRestartMH1.Rnw:339-341
 ###################################################
 AdjMatrix_PPI_PATH <- compute.adjacency.matrix(PPI_PATH_Multiplex)
 AdjMatrixNorm_PPI_PATH <- normalize.multiplex.adjacency(AdjMatrix_PPI_PATH)
 
 
 ###################################################
-### code chunk number 15: RandomWalkRestartMH1.Rnw:346-351
+### code chunk number 15: RandomWalkRestartMH1.Rnw:347-352
 ###################################################
 ## We launch the algorithm with the default parameters (See details on manual)
 RWR_PPI_PATH_Results <- Random.Walk.Restart.Multiplex(AdjMatrixNorm_PPI_PATH,
@@ -166,7 +166,7 @@ RWR_PPI_PATH_Results
 
 
 ###################################################
-### code chunk number 16: RandomWalkRestartMH1.Rnw:357-361
+### code chunk number 16: RandomWalkRestartMH1.Rnw:358-362
 ###################################################
 ## In this case we select to induce a multiplex network with the Top 15 genes.
 TopResults_PPI_PATH <-
@@ -189,7 +189,7 @@ plot(TopResults_PPI_PATH, vertex.label.color="black",
 
 
 ###################################################
-### code chunk number 18: RandomWalkRestartMH1.Rnw:402-414
+### code chunk number 18: RandomWalkRestartMH1.Rnw:403-415
 ###################################################
 ## We keep gene-diseases associations where genes are present in the PPI
 ## or in the pathway network
@@ -206,13 +206,13 @@ PPI_PATH_Disease_Net
 
 
 ###################################################
-### code chunk number 19: RandomWalkRestartMH1.Rnw:421-422
+### code chunk number 19: RandomWalkRestartMH1.Rnw:422-423
 ###################################################
 PPI_PATH_HetTranMatrix <- compute.transition.matrix(PPI_PATH_Disease_Net)
 
 
 ###################################################
-### code chunk number 20: RandomWalkRestartMH1.Rnw:428-435
+### code chunk number 20: RandomWalkRestartMH1.Rnw:429-436
 ###################################################
 ## We launch the algorithm with the default parameters (See details on manual)
 RWRH_PPI_PATH_Disease_Results <-
@@ -224,7 +224,7 @@ RWRH_PPI_PATH_Disease_Results
 
 
 ###################################################
-### code chunk number 21: RandomWalkRestartMH1.Rnw:442-447
+### code chunk number 21: RandomWalkRestartMH1.Rnw:443-448
 ###################################################
 ## In this case we select to induce a network with the Top 10 genes.
 ## and the Top 10 diseases.

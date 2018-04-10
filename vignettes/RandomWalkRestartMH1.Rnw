@@ -1,5 +1,6 @@
 %\VignetteIndexEntry{Random Walk with Restart on Multiplex and Heterogeneous Networks}
 %\VignettePackage{RandomWalkRestartMH}
+%\VignetteEngine{utils::Sweave}
 
 \documentclass{article}
 

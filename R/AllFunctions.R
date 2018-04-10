@@ -155,7 +155,7 @@ geometric.mean <- function(Scores, L, N) {
 
     FinalScore <- numeric(length = N)
 
-    for (i in 1:N){
+    for (i in seq_len(N)){
         FinalScore[i] <- prod(Scores[seq(from = i, to = N*L, by=N)])^(1/L)
     }
 
@@ -190,7 +190,7 @@ add.missing.nodes <- function (Layers,Nr_Layers,NodeNames) {
     Layers_New <- vector("list", Nr_Layers)
 
     ## We add to each layer the missing nodes of the pool of nodes (all nodes).
-    for (i in 1:Nr_Layers){
+    for (i in seq_len(Nr_Layers)){
         Node_Names_Layer <- V(Layers[[i]])$name
         Missing_Nodes <- NodeNames[which(!NodeNames %in% Node_Names_Layer)]
         Layers_New[[i]] <- add_vertices(Layers[[i]] ,length(Missing_Nodes),
@@ -322,7 +322,7 @@ create.multiplex.default <- function(L1, L2=NULL, L3=NULL, L4=NULL,
 
     if(missing(Layers_Name)){
         Layers_Name <-character()
-        for (i in 1:Number_of_Layers){
+        for (i in seq_len(Number_of_Layers)){
             Layers_Name <- c(Layers_Name,paste("Layer_", i,":",sep="",
                                                 collapse = ""))
         }
@@ -337,7 +337,7 @@ create.multiplex.default <- function(L1, L2=NULL, L3=NULL, L4=NULL,
     Layer_List <- add.missing.nodes(Layer_List, Number_of_Layers,Pool_of_Nodes)
 
     # We set the attributes of the layer
-    for (i in 1:Number_of_Layers){
+    for (i in seq_len(Number_of_Layers)){
         Layer_List[[i]] <- set_edge_attr(Layer_List[[i]], "type",
                                             E(Layer_List[[i]]),
                                             value = Layers_Name[i])
@@ -361,7 +361,7 @@ print.Multiplex <- function(x,...)
     print(x$Number_of_Layers)
     cat("\nNumber of Nodes:\n")
     print(x$Number_of_Nodes)
-    for (i in 1:x$Number_of_Layers){
+    for (i in seq_len(x$Number_of_Layers)){
         cat("\n")
         print(x[[i]])
     }
@@ -424,7 +424,7 @@ compute.adjacency.matrix <- function(x,delta = 0.5)
     Col_Node_Names <- character()
     Row_Node_Names <- character()
 
-    for (i in 1:L){
+    for (i in seq_len(L)){
         Adjacency_Layer <-  as_adjacency_matrix(x[[i]],sparse = TRUE)
 
         ## We order the matrix by the node name. This way all the matrix will
@@ -448,7 +448,7 @@ compute.adjacency.matrix <- function(x,delta = 0.5)
 
         ## We fill the off-diagonal blocks with the transition probability
         ## among layers.
-        for (j in 1:L){
+        for (j in seq_len(L)){
             Position_ini_col <- 1 + (j-1)*N
             Position_end_col <- N + (j-1)*N
             if (j != i){
@@ -473,10 +473,10 @@ get.seed.scores.multiplex <- function(Seeds,Number_Layers,tau) {
 
     Current_Seed_Labeled <- character()
 
-    for (k in 1:Number_Layers){
+    for (k in seq_len(Number_Layers)){
         Current_Seed_Labeled <- c(Current_Seed_Labeled,
                                     paste(Seeds[k],k,sep="_",collapse = ""))
-        for (j in 1:length(Seeds)){
+        for (j in seq_len(length(Seeds))){
             Seed_Seeds_Layer_Labeled[((k-1)*length(Seeds))+ j] <-
                                 paste(Seeds[j],k,sep="_",collapse = "")
             Seeds_Seeds_Scores[((k-1)*length(Seeds))+ j] <-
@@ -682,7 +682,7 @@ Random.Walk.Restart.Multiplex.default <- function(x, MultiplexObject, Seeds,
     Score = numeric(length = N)
 
     rank_global <- data.frame(NodeNames = NodeNames, Score = Score)
-    rank_global$NodeNames <- gsub("_1", "", row.names(prox_vector)[1:N])
+    rank_global$NodeNames <- gsub("_1", "", row.names(prox_vector)[seq_len(N)])
     rank_global$Score <- geometric.mean(as.vector(prox_vector[,1]),L,N)
 
     ## We sort the genes according to their score.
@@ -723,14 +723,14 @@ get.bipartite.graph <- function(Names_Mul, Names_Het, Nodes_relation,
     rownames(Bipartite_matrix) <- Names_Mul_order
     colnames(Bipartite_matrix) <- Names_Het_order
 
-    for (i in 1:Number_Nodes_1){
+    for (i in seq_len(Number_Nodes_1)){
         current_node1 <- Names_Mul_order[i]
         current_node2 <-
             Nodes_relation[which(Nodes_relation[,1] == current_node1),2]
 
 
         if (length(current_node2) > 0){
-            for (j in 1:length(current_node2)){
+            for (j in seq_len(length(current_node2))){
                 if (!is.na(current_node2[j])){
                     ## We need to identify the position on the matrix.
                     index <-
@@ -750,7 +750,7 @@ expand.bipartite.graph <- function(Number_Nodes_1,Number_Layers,Number_Nodes_2,
                                     ncol=Number_Nodes_2,sparse = TRUE)
     Row_Node_Names <- character()
 
-    for (i in 1:Number_Layers){
+    for (i in seq_len(Number_Layers)){
         Layer_Row_Names <- paste(rownames(Bipartite_matrix),i,sep="_")
         Row_Node_Names <- c(Row_Node_Names,Layer_Row_Names)
         Position_ini_row <- 1 + (i-1)*Number_Nodes_1
@@ -913,7 +913,7 @@ print.MultiplexHet <- function(x,...)
     print(x$Number_of_Layers)
     cat("\nNumber of Nodes Multiplex:\n")
     print(x$Number_of_Nodes_Multiplex)
-    for (i in 1:x$Number_of_Layers){
+    for (i in seq_len(x$Number_of_Layers)){
         cat("\n")
         print(x[[i]])
     }
@@ -935,7 +935,7 @@ get.transition.multiplex.secondNet <- function(Number_Nodes_Multiplex,
     Col_Sum_Bipartite <- Matrix::colSums (SupraBipartiteMatrix, na.rm = FALSE,
                                             dims = 1,sparseResult = FALSE)
 
-    for (j in 1:Number_Nodes_secondNet){
+    for (j in seq_len(Number_Nodes_secondNet)){
         if (Col_Sum_Bipartite[j] != 0){
             Transition_Multiplex_SecondNet[,j] <-
                 (lambda*SupraBipartiteMatrix[,j]) /Col_Sum_Bipartite[j]
@@ -957,7 +957,7 @@ get.transition.secondNet.multiplex <- function(Number_Nodes_Multiplex,
     Row_Sum_Bipartite <- Matrix::rowSums (SupraBipartiteMatrix, na.rm = FALSE,
                                             dims = 1,sparseResult = FALSE)
 
-    for (i in 1:(Number_Nodes_Multiplex*Number_Layers)){
+    for (i in seq_len((Number_Nodes_Multiplex*Number_Layers))){
         if (Row_Sum_Bipartite[i] != 0){
             Transition_SecondNet_Multiplex[,i] <-
                 (lambda*SupraBipartiteMatrix[i,])/Row_Sum_Bipartite[i]
@@ -982,7 +982,7 @@ get.transition.multiplex <- function(Number_Nodes_Multiplex,Number_Layers,
     Row_Sum_Bipartite <- Matrix::rowSums (SupraBipartiteMatrix, na.rm = FALSE,
                                         dims = 1,sparseResult = FALSE)
 
-    for (j in 1:(Number_Nodes_Multiplex*Number_Layers)){
+    for (j in seq_len((Number_Nodes_Multiplex*Number_Layers))){
         if(Row_Sum_Bipartite[j] != 0){
             Transition_Multiplex_Network[,j] <-
                 ((1-lambda)*SupraAdjacencyMatrix[,j]) /Col_Sum_Multiplex[j]
@@ -1010,7 +1010,7 @@ get.transition.secondNet <- function(Number_Nodes_secondNet,lambda,
     Col_Sum_Bipartite <- Matrix::colSums (SupraBipartiteMatrix, na.rm = FALSE,
                                         dims = 1,sparseResult = FALSE)
 
-    for (j in 1:Number_Nodes_secondNet){
+    for (j in seq_len(Number_Nodes_secondNet)){
         if(Col_Sum_Bipartite[j] != 0){
             Transition_Second_Network[,j] <-
                 ((1-lambda)*AdjMatrix[,j]) /Col_Sum_SecondNet[j]
@@ -1149,11 +1149,11 @@ get.seed.scores.multHet <- function(Multiplex_Seed_Nodes,SecondNet_Seed_Nodes,
 
         Current_MultiplexNode_Labeled <- character()
 
-        for (k in 1:L){
+        for (k in seq_len(L)){
             Current_MultiplexNode_Labeled <-
                 c(Seed_Multiplex_Layer_Labeled,paste(Multiplex_Seed_Nodes[k],
                                                     k,sep="_",collapse = ""))
-            for (j in 1:n){
+            for (j in seq_len(n)){
                 Seed_Multiplex_Layer_Labeled[((k-1)*n)+ j] <-
                     paste(Multiplex_Seed_Nodes[j],k,sep="_",collapse = "")
                 Seeds_Multiplex_Scores[((k-1)*n)+ j] <- ((1-eta) * tau[k])/n
@@ -1175,11 +1175,11 @@ get.seed.scores.multHet <- function(Multiplex_Seed_Nodes,SecondNet_Seed_Nodes,
 
             Current_MultiplexNode_Labeled <- character()
 
-            for (k in 1:L){
+            for (k in seq_len(L)){
                 Current_MultiplexNode_Labeled <-
                     c(Current_MultiplexNode_Labeled,
                     paste(Multiplex_Seed_Nodes[k],k,sep="_",collapse = ""))
-                for (j in 1:n){
+                for (j in seq_len(n)){
                     Seed_Multiplex_Layer_Labeled[((k-1)*n)+ j] <-
                         paste(Multiplex_Seed_Nodes[j],k,sep="_",collapse = "")
                     Seeds_Multiplex_Scores[((k-1)*n)+ j] <- tau[k]/n
@@ -1207,7 +1207,7 @@ rank.nodes.multiplex <- function(N, L, Results,Seeds){
     Score <- numeric(length = N)
 
     nodes_multiplex_rank <- data.frame(NodeNames = NodeNames, Score = Score)
-    nodes_multiplex_rank$NodeNames <- gsub("_1", "", row.names(Results)[1:N])
+    nodes_multiplex_rank$NodeNames <- gsub("_1", "", row.names(Results)[seq_len(N)])
 
     ## We calculate the Geometric Mean among the proteins in the
     ## different layers.
@@ -1548,7 +1548,7 @@ create.multiplexNetwork.topResults <- function(RWRM_Result_Object,
     }
 
     Multiplex_Network <- graph.data.frame(Multiplex_df,directed=FALSE)
-    Top_Results_Nodes <- RWRM_Result_Object$RWRM_Results$NodeNames[1:k]
+    Top_Results_Nodes <- RWRM_Result_Object$RWRM_Results$NodeNames[seq_len(k)]
     Query_Nodes <- c(RWRM_Result_Object$Seed_Nodes,Top_Results_Nodes)
 
     Induced_Network <- dNetInduce(g=Multiplex_Network, nodes_query=Query_Nodes,
@@ -1694,9 +1694,9 @@ create.multiplexHetNetwork.topResults <- function(RWRMH_Results_Object,
         graph.data.frame(Multiplex_Heterogeneous_df,directed=FALSE)
 
     Top_Results_MultiNodes <-
-        RWRMH_Results_Object$RWRMH_Results_MultiplexNodes$NodeNames[1:k]
+        RWRMH_Results_Object$RWRMH_Results_MultiplexNodes$NodeNames[seq_len(k)]
     Top_Results_SecondNetNodes <-
-        RWRMH_Results_Object$RWRMH_Results_SecondNetNodes$SecondNet_node[1:k]
+        RWRMH_Results_Object$RWRMH_Results_SecondNetNodes$SecondNet_node[seq_len(k)]
 
     Query_Nodes <- c(c(RWRMH_Results_Object$Multiplex_Seed_Nodes,
                         RWRMH_Results_Object$SecondNet_Seed_Nodes),
