@@ -14,7 +14,7 @@ URL: https://www.biorxiv.org/content/early/2017/08/30/134734
 Encoding: UTF-8
 LazyData: true
 Imports: igraph, Matrix, dnet, methods
-Depends: R(>= 3.6.0)
+Depends: R(>= 3.5.0)
 RoxygenNote: 6.0.1
 biocViews: GenePrediction, NetworkInference, SomaticMutation,
         BiomedicalInformatics, MathematicalBiology, SystemsBiology,
