@@ -1,0 +1,24 @@
+Package: RandomWalkRestartMH
+Type: Package
+Title: Random walk with restart on multiplex and heterogeneous Networks
+Version: 0.99.1
+Date: 2018-03-28
+Author: Alberto Valdeolivas Urbelz <alvaldeolivas@gmail.com>
+Maintainer: Alberto Valdeolivas Urbelz <alvaldeolivas@gmail.com>
+Description: This package performs Random Walk with Restart on multiplex and
+    heterogeneous networks. It is described in the following article:
+    "Random Walk With Restart On Multiplex And Heterogeneous Biological 
+    Networks". 
+License: GPL (>= 2)
+URL: https://www.biorxiv.org/content/early/2017/08/30/134734
+Encoding: UTF-8
+LazyData: true
+Imports: igraph, Matrix, dnet, methods
+Depends: R(>= 3.5.0)
+RoxygenNote: 6.0.1
+biocViews: GenePrediction, NetworkInference, SomaticMutation,
+        BiomedicalInformatics, MathematicalBiology, SystemsBiology,
+        GraphAndNetwork, Pathways, BioCarta, KEGG, Reactome, Network
+Suggests: BiocStyle, testthat
+NeedsCompilation: no
+Packaged: 2018-04-09 20:31:46 UTC; alvaldeolivas
