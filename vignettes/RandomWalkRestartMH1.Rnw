@@ -37,8 +37,10 @@ BiocStyle::latex()
 
 \begin{abstract}
 This vignette describes how to use the \Biocpkg{RandomWalkRestartMH} package
-to perform Random Walk with Restart on different types of networks. It is based
-on the work we presented on the following article:
+to run Random Walk with Restart algorithms on monoplex, multiplex, 
+heterogeneous and multiplex-heterogeneous networks.
+It is based on the work we presented on the following article:
+
 \url{https://www.biorxiv.org/content/early/2017/08/30/134734}
 
 \end{abstract}
@@ -58,11 +60,11 @@ Report issues to \email{alvaldeolivas@gmail.com}
 \Biocpkg{RandomWalkRestartMH} (Random Walk with Restart on Multiplex and
 Heterogeneous Networks) is an R package built to provide easy access to the
 Random Walk with Restart (RWR) algorithm on different types of networks:
-i) Monoplex, ii) Multiplex, iii) Heterogeneous and iv) Multiplex-Heterogeneous.
-It is based on the work we presented in the article:
-\url{https://www.biorxiv.org/content/early/2017/08/30/134734}.
+i) Monoplex networks, ii) Multiplex networks, iii) Heterogeneous networks and 
+iv) Multiplex-Heterogeneous networks. It is based on the work we presented in 
+the article: \url{https://www.biorxiv.org/content/early/2017/08/30/134734}.
 
-RWR simulates an imaginary particle which starts on a seed(s) node(s) and
+RWR simulates an imaginary particle that starts on a seed(s) node(s) and
 follows randomly the edges of a network. At each step, there is a restart
 probability, r, meaning that the particle can come back to the seed(s)
 \cite{Pan2004}. This imaginary particle can explore the following types
@@ -72,30 +74,32 @@ of networks:
 \item A monoplex or single network, which contains solely nodes of the same
 nature. In addition, all the edges belong to the same category.
 
-\item A multiplex network, which is a collection of layers (monoplex networks)
-sharing the same nodes, but their edges represent relationships of
-different nature in each layer \cite{Battiston2014}. In this case, the particle
-can jump from one node to its counterparts on different layers.
+\item A multiplex network, defined as a collection of monoplex networks 
+considered as layers of the multiplex network. In a multiplex network, the 
+different layers share the same set of nodes, but the edges represent 
+relationships of different nature \cite{Battiston2014}. In this case, the RWR 
+particle can jump from one node to its counterparts on different layers.
 
 \item A heterogeneous network, which is composed of two monoplex networks
 containing nodes of different nature. These different kind of nodes can be
-connected thanks to bipartite edges, allowing the particle to jump between
+connected thanks to bipartite edges, allowing the RWR particle to jump between
 the two networks.
 
 \item A multiplex and heterogeneous network, which is built by linking the nodes
-in every layer of the multiplex network to nodes of different nature thanks to
-biparitte edges. The particle can now explore the full network.
+in every layer of a multiplex network to nodes of different nature thanks to
+bipartite edges. The RWR particle can now explore the full 
+multiplex-heterogeneous network.
 \end{itemize}
 
-The user can introduce up to four single networks (monoplex networks) to create
+The user can introduce up to six single networks (monoplex networks) to create
 a multiplex network. The multiplex network can also be integrated, thanks to
-biparite relationships, with a network containing nodes of different nature.
-Proceeding this way a network, both multiplex and heterogeneous, will be
+bipartite relationships, with a network containing nodes of different nature.
+Proceeding this way, a network both multiplex and heterogeneous will be
 generated.
 
-The user should take in account that this first version of the package is only
-able to deal with undirected and unweighted networks. We hope to include these
-new functionalities soon in an updated version of \Biocpkg{RandomWalkRestartMH}.
+Please note that this first version of the package deals only with undirected 
+and unweighted networks. New functionalities will be included in future updated 
+versions of \Biocpkg{RandomWalkRestartMH}.
 
 \section{Installation of the \Biocpkg{RandomWalkRestartMH} package}
 First of all, you need a current version of \R{}~\url{(www.r-project.org)}.
@@ -116,39 +120,40 @@ network, a pathway network, a disease-disease similarity network and
 combinations thereof. These networks are obtained as detailed in
 \cite{Valdeolivas2017}. The PPI and the Pathway network were reduced by only
 considering genes/proteins expressed in the adipose tissue, in order to reduce
-the computaiton time of this vignette.
+the computation time of this vignette.
 
-The goal, as described in \cite{Valdeolivas2017}, is to
-find candidate genes potentially associated with diseases by a
-guilt-by-association approach. This is based on the fact that genes/proteins
-associated with similar functions or similar phenotypes tend to lie closer in
-biological networks.
+The goal in the example presented here is, as described in 
+\cite{Valdeolivas2017}, to find candidate genes potentially associated with 
+diseases by a guilt-by-association approach. This is based on the fact that 
+genes/proteins with similar functions or similar phenotypes tend to 
+lie closer in biological networks. Therefore, the larger the RWR score of a 
+gene, the more likely it is to be functionally related with the seeds. 
 
 We focus on a real biological example: the SHORT syndrome
 (MIM code: 269880) and its causative gene \textit{PIK3R1} as described in
 \cite{Valdeolivas2017}. We will see throughout the following paragraphs how the
-results evolve due to the integration of additional and complementary networks.
+RWR results evolve due to the the integration and exploration of additional 
+networks.
 
 \subsection{Random Walk with Restart on a Monoplex Network}
 RWR has usually been applied within the framework of single
 PPI networks in bioinformatics\cite{Kohler2008}. A gene or a set of genes,
-so-called seed(s),
-known to be implicated in a concrete function or in a specific disease, are
-chosen as the starting point(s) of the algorithm. The walker explores the
-neighbourhood of the seeds and the algorithm computes a score for all the nodes
-of the network. The larger is the score of a node, the closer it is to the
-seed(s).
+so-called seed(s), known to be implicated in a concrete function or in a 
+specific disease, are chosen as the starting point(s) of the algorithm. The 
+RWR particle explores the neighbourhood of the seeds and the algorithm computes 
+a score for all the nodes of the network. The larger it is the score of a node, 
+the closer it is to the seed(s).
 
-Therefore, let us generate an object of the class \Rclass{Multiplex}, even if
-it is a monoplex network, with our PPI network \cite{Valdeolivas2017}.
+Let us generate an object of the class \Rclass{Multiplex}, even if it is a 
+monoplex network, with our PPI network.
 
 <<>>=
 library(RandomWalkRestartMH)
 library(igraph)
 data(PPI_Network) # We load the PPI_Network
 
-## We create a Multiplex object of 1 layer(Monoplex) and we display how it
-## looks like
+## We create a Multiplex object composed of 1 layer (It's a Monoplex Network) 
+## and we display how it looks like
 PPI_MultiplexObject <- create.multiplex(PPI_Network,Layers_Name=c("PPI"))
 PPI_MultiplexObject
 @
@@ -161,9 +166,10 @@ AdjMatrix_PPI <- compute.adjacency.matrix(PPI_MultiplexObject)
 AdjMatrixNorm_PPI <- normalize.multiplex.adjacency(AdjMatrix_PPI)
 @
 
-We need to define the seed(s) before running RWR on this PPI network. As
-commented above, we are focusing on the example of the SHORT syndrome.
-Therefore, we take the \textit{PIK3R1} gene as seed, and we execute RWR.
+Then, we need to define the seed(s) before running the RWR algorithm on this PPI 
+network. As commented above, we are focusing on the example of the SHORT 
+syndrome. Therefore, we take the \textit{PIK3R1} gene as seed, and we execute
+RWR.
 
 <<>>=
 SeedGene <- c("PIK3R1")
@@ -175,12 +181,13 @@ RWR_PPI_Results
 @
 
 Finally, we can create a network (an \Rclass{igraph} object) with the top
-scored genes. Visualize the results in this way is always a good idea
-in order to prioritize genes, since we can have a global view of all
-the potential candidates. The results are presented in Figure~\ref{fig:1}.
+scored genes. Visualize the top results within their interaction network is 
+always a good idea in order to prioritize genes, since we can have a global view 
+of all the potential candidates. The results are presented in 
+Figure~\ref{fig:1}.
 
 <<>>=
-## In this case we select to induce a network with the Top 15 genes.
+## In this case we selected to induce a network with the Top 15 genes.
 TopResults_PPI <-
     create.multiplexNetwork.topResults(RWR_PPI_Results,PPI_MultiplexObject,
                                        k=15)
@@ -208,16 +215,17 @@ A RWR on a heterogeneous (RWR-H) biological network was described by
 \cite{Li2010}. They connected a PPI network with a disease-disease similarity
 network using known gene-disease associations. In this case, genes and/or
 diseases can be used as seed nodes for the algorithm. In the following example,
-we also use a heterogeneous network integrated by a PPI and a disease-disease
+we also use a heterogeneous network integrating a PPI and a disease-disease
 similarity network. However, the procedure to obtain these networks is different
 to the one proposed in \cite{Li2010}, and the details are described in our
 article \cite{Valdeolivas2017}.
 
-Let us generate a PPI-disease heterogeneous network. To do so, we load the
-disease network and combine it with our \Rclass{Multiplex} object
-containing the PPI thanks to the gene-diseases associations obtained from OMIM
-\cite{Hamosh2005}. A \Rclass{MultiplexHet} object will be created, even if we
-are dealing with a monoplex-heterogeneous network.
+To generate a PPI-disease heterogeneous network object, we load the
+disease-disease network, and combine it with our previously defined 
+\Rclass{Multiplex} object containing the PPI network, thanks to the 
+gene-diseases associations obtained from OMIM \cite{Hamosh2005}. 
+A \Rclass{MultiplexHet} object will be created, even if we are dealing with 
+a monoplex-heterogeneous network.
 
 <<>>=
 data(Disease_Network) # We load our disease Network
@@ -241,8 +249,8 @@ PPI_Disease_Net
 @
 
 To apply the RWR-H on a heterogeneous network, we need to compute a matrix that
-accounts for all the possible transitions of the walker within that network
-\cite{Li2010}.
+accounts for all the possible transitions of the RWR particle within that 
+network \cite{Li2010}.
 
 <<>>=
 PPIHetTranMatrix <- compute.transition.matrix(PPI_Disease_Net)
@@ -314,7 +322,7 @@ connections \cite{Battiston2014}. This is the case of social interactions,
 transportation networks or biological systems, among others. The Multiplex
 framework provides an appealing approach to describe these systems, since they
 are able to integrate this diversity of data while keeping track of the
-original features of the different sources.
+original features and topologies of the different sources.
 
 Consequently, algorithms able to exploit the information stored on multiplex
 networks should improve the results provided by methods operating on
@@ -416,8 +424,8 @@ PPI_PATH_Disease_Net
 @
 
 To apply the RWR-MH on a multiplex and heterogeneous network, we need to
-compute a matrix that accounts for all the possible transitions of the walker
-within this network \cite{Valdeolivas2017}.
+compute a matrix that accounts for all the possible transitions of the RWR 
+particle within this network \cite{Valdeolivas2017}.
 
 <<>>=
 PPI_PATH_HetTranMatrix <- compute.transition.matrix(PPI_PATH_Disease_Net)
@@ -477,8 +485,8 @@ plot(TopResults_PPI_PATH_Disease, vertex.label.color="black",
 (PPI-Pathway-Disease).
 Network representation of the top 10 ranked genes
 and the top 10 ranked diseases when the RWR-H algorithm is executed using the
-\textit{PIK3R1} gehe and the SHORT syndrome disease (MIM code: 269880) as seeds
-(yellow nodes).Circular nodes represent genes and rectangular nodes show
+\textit{PIK3R1} gene and the SHORT syndrome disease (MIM code: 269880) as seeds
+(yellow nodes). Circular nodes represent genes and rectangular nodes show
 diseases. Blue curved edges are PPI interactions and red straight edges are
 Pathways links. Black edges are similarity links between diseases.
 Dashed edges are the bipartite gene-disease associations.
