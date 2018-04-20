@@ -30,9 +30,9 @@ RWR_MultiHetResults <- Random.Walk.Restart.MultiplexHet(MultiHetTranMatrix,
     multiHetObject,Multiplex_Seeds,SecondNet_Seeds)
 
 test_that("Objects are of the expected type", {
-    expect_equal(is.multiplex(multiObject), TRUE)
-    expect_equal(is.multiplex.het(multiHetObject), TRUE)
-    expect_equal(is.RWRM.Results(RWR_MultiResults), TRUE)
-    expect_equal(is.RWRMH.Results(RWR_MultiHetResults), TRUE)
+    expect_equal(isMultiplex(multiObject), TRUE)
+    expect_equal(isMultiplexHet(multiHetObject), TRUE)
+    expect_equal(isRWRM_Results(RWR_MultiResults), TRUE)
+    expect_equal(isRWRMH_Results(RWR_MultiHetResults), TRUE)
 })
 
