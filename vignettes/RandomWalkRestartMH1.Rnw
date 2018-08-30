@@ -108,8 +108,9 @@ First of all, you need a current version of \R{}~\url{(www.r-project.org)}.
 commands on an \R{}~console:
 
 <<installation,eval=FALSE>>=
-source("http://bioconductor.org/biocLite.R")
-biocLite("RandomWalkRestartMH")
+if (!requireNamespace("BiocManager", quietly=TRUE))
+    install.packages("BiocManager")
+BiocManager::install("RandomWalkRestartMH")
 @
 
 \section{A Detailed Workflow}
