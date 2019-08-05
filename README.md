@@ -9,4 +9,5 @@ A package to perform Random Walk with Restart on different types of networks:
 
 It is based on the work we presented on the following article:
 
+https://academic.oup.com/bioinformatics/article/35/3/497/5055408
 https://www.biorxiv.org/content/early/2017/08/30/134734
