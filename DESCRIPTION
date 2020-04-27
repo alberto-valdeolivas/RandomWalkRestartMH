@@ -1,7 +1,7 @@
 Package: RandomWalkRestartMH
 Type: Package
 Title: Random walk with restart on multiplex and heterogeneous Networks
-Version: 1.7.0
+Version: 1.8.0
 Date: 2018-03-28
 Author: Alberto Valdeolivas Urbelz <alvaldeolivas@gmail.com>
 Maintainer: Alberto Valdeolivas Urbelz <alvaldeolivas@gmail.com>
