@@ -4,8 +4,10 @@
 \name{PPI_Network}
 \alias{PPI_Network}
 \title{A protein-protein physical interaction network (PPI network)}
-\format{An igraph object containing 18062 binary interactions between 4317
-proteins}
+\format{
+An igraph object containing 18062 binary interactions between 4317
+proteins
+}
 \source{
 Valdeolivas, A., Tichit, L., Navarro, C., Perrin, S., Odelin, G., 
 Levy, N., … Baudot, A. (2017). Random Walk With Restart On Multiplex And 

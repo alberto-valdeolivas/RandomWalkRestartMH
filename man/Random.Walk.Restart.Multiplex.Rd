@@ -7,8 +7,16 @@
 \usage{
 Random.Walk.Restart.Multiplex(...)
 
-\method{Random.Walk.Restart.Multiplex}{default}(x, MultiplexObject, Seeds,
-  r = 0.7, tau, ...)
+\method{Random.Walk.Restart.Multiplex}{default}(
+  x,
+  MultiplexObject,
+  Seeds,
+  r = 0.7,
+  tau,
+  MeanType = "Geometric",
+  DispResults = "TopScores",
+  ...
+)
 }
 \arguments{
 \item{...}{Further arguments passed to \code{Random.Walk.Restart.Multiplex}}
@@ -29,6 +37,20 @@ restarting to a seed node after each step. See more details below.}
 of the different layers (layers weights). It must have the same length than
 the number of layers of the multpiplex network. The sum of its components
 divided by the number of layers must be 1. See more details below.}
+
+\item{MeanType}{The user can choose one of the following options: 
+c("Geometric","Arithmetic","Sum"). These options represent the different way
+to combine the RWR score for the same node in different layers. By default 
+and recommended Geometric (Geometric Mean.). Arithmetic is the arithmetic 
+mean and sum just sum all the scores for the same node across the different
+layers.}
+
+\item{DispResults}{The user can choose one of the following options: 
+c("TopScores","Alphabetic"). These options represent the way the RWR results
+would be presented. By default, and recommended, the nodes would be ordered
+by score. This option is also required to properly run the 
+\code{create.multiplexNetwork.topResults} and 
+\code{create.multiplexHetNetwork.topResults} functions}
 }
 \value{
 A \code{RWRM_Results} object. It contains a sorted ranking of all
@@ -69,7 +91,7 @@ a way to give different relevance (weight) to the different layers.
 \examples{
 m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
 m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
-multiObject <- create.multiplex(m1,m2)
+multiObject <- create.multiplex(list(m1=m1,m2=m2))
 AdjMatrix <- compute.adjacency.matrix(multiObject)
 AdjMatrixNorm <- normalize.multiplex.adjacency(AdjMatrix)
 SeedNodes <- c(1)

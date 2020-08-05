@@ -38,7 +38,7 @@
 #' @examples
 #' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
 #' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
-#' multiObject <- create.multiplex(m1,m2)
+#' multiObject <- create.multiplex(list(m1=m1,m2=m2))
 #' AdjMatrix <- compute.adjacency.matrix(multiObject)
 #' AdjMatrixNorm <- normalize.multiplex.adjacency(AdjMatrix)
 #' Seed <- c(1)
@@ -129,17 +129,18 @@ create.multiplexNetwork.topResults <-
 #' @examples
 #' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
 #' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
-#' multiObject <- create.multiplex(m1,m2)
+#' multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
 #' h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
+#' multiObject_2 <- create.multiplex(list(h1=h1))
 #' bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
 #' multiHetObject <- 
-#'     create.multiplexHet(multiObject, h1,bipartite_relations)
+#'     create.multiplexHet(multiObject_1, multiObject_2,bipartite_relations)
 #' MultiHetTranMatrix <- compute.transition.matrix(multiHetObject)
-#' Multiplex_Seeds <- c(1)
-#' SecondNet_Seeds <- c("E")
+#' Multiplex1_Seeds <- c(1)
+#' Multiplex2_Seeds <- c("E")
 #' RWR_MultiHetResults <- 
 #'     Random.Walk.Restart.MultiplexHet(MultiHetTranMatrix, multiHetObject,
-#'         Multiplex_Seeds,SecondNet_Seeds)
+#'         Multiplex1_Seeds,Multiplex2_Seeds)
 #' create.multiplexHetNetwork.topResults(RWR_MultiHetResults,multiHetObject,
 #'     bipartite_relations)
 #'
@@ -150,11 +151,11 @@ create.multiplexNetwork.topResults <-
 create.multiplexHetNetwork.topResults <- 
     function(RWRMH_Results_Object, MultiplexHetObject,bipartite_relations,
         bipartite_name, k=25) {
-        
+
     if (!isMultiplexHet(MultiplexHetObject)) {
         stop("Not a Multiplex Heterogeneous object")
     }
-        
+
     if (!isRWRMH_Results(RWRMH_Results_Object)){
         stop("Not Results of RWR-MH")
     }
@@ -162,8 +163,8 @@ create.multiplexHetNetwork.topResults <-
     if (!is.data.frame(bipartite_relations)) {
         stop("Third element should be a data frame")
     } else {
-        if (ncol(bipartite_relations) != 2) {
-            stop("The data frame should contain two columns")
+        if (!(ncol(bipartite_relations) %in% c(2,3))) { 
+            stop("The data frame should contain two or three columns")
         } else {
             if (nrow(bipartite_relations) == 0) {
                 stop("The data frame should contain any bipartite 
@@ -171,12 +172,12 @@ create.multiplexHetNetwork.topResults <-
             } else {
                 names_1 <- unique(c(as.character(bipartite_relations[, 1])))
                 names_2 <- unique(c(as.character(bipartite_relations[, 2])))
-                if (!all(names_1 %in% MultiplexHetObject$Pool_of_Nodes)){
+                if (!all(names_1 %in% MultiplexHetObject$Multiplex1$Pool_of_Nodes)){
                     stop("Some of the nodes in the first column of the data
                         frame are not nodes of the multiplex network")
                 } else {
                     if (!all(names_2 %in% 
-                    V(MultiplexHetObject$Second_Network)$name)){
+                        MultiplexHetObject$Multiplex2$Pool_of_Nodes)){
                         stop("Some of the nodes in the second column of the
                             data frame are not nodes of the second network")
                     }
@@ -204,30 +205,33 @@ create.multiplexHetNetwork.topResults <-
     bipartite_relations$type <- bipartite_name
     colnames(bipartite_relations) <-c("from","to","type")
 
-    L <- MultiplexHetObject$Number_of_Layers
+    Number_Layers_1 <- MultiplexHetObject$Multiplex1$Number_of_Layers 
+    Number_Layers_2 <- MultiplexHetObject$Multiplex2$Number_of_Layers 
     
-    Multiplex_df <- 
-        do.call(rbind.data.frame,lapply(MultiplexHetObject[1:L],as_data_frame))
-    
-    Second_Network_df <- as_data_frame(MultiplexHetObject$Second_Network)
+    Multiplex1_df <- 
+        do.call(rbind.data.frame,
+        lapply(MultiplexHetObject$Multiplex1[1:Number_Layers_1],as_data_frame))
 
+    Multiplex2_df <- 
+        do.call(rbind.data.frame,
+                lapply(MultiplexHetObject$Multiplex2[1:Number_Layers_2],as_data_frame))
+    
     Multiplex_Heterogeneous_df <- 
-        rbind.data.frame(Multiplex_df,Second_Network_df,bipartite_relations)
+        rbind.data.frame(Multiplex1_df,Multiplex2_df,bipartite_relations)
 
     Multiplex_Heterogeneous_Network <-
         graph.data.frame(Multiplex_Heterogeneous_df,directed=FALSE)
 
     Top_Results_MultiNodes <-
-        RWRMH_Results_Object$RWRMH_Results_MultiplexNodes$NodeNames[seq_len(k)]
+        RWRMH_Results_Object$RWRMH_Multiplex1$NodeNames[seq_len(k)]
     Top_Results_SecondNetNodes <-
-        RWRMH_Results_Object$RWRMH_Results_SecondNetNodes$SecondNet_node[seq_len(k)]
+        RWRMH_Results_Object$RWRMH_Multiplex2$NodeNames[seq_len(k)]
 
-    Query_Nodes <- c(c(RWRMH_Results_Object$Multiplex_Seed_Nodes,
-        RWRMH_Results_Object$SecondNet_Seed_Nodes), Top_Results_MultiNodes,
-            Top_Results_SecondNetNodes)
+    Query_Nodes <- c(RWRMH_Results_Object$Seed_Nodes,Top_Results_MultiNodes,
+        Top_Results_SecondNetNodes)
 
     Induced_Network <- 
         dNetInduce(g=Multiplex_Heterogeneous_Network, nodes_query=Query_Nodes, 
             knn=0,remove.loops=FALSE, largest.comp=FALSE)
     return(Induced_Network)
-}
+    }

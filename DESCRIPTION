@@ -1,24 +1,48 @@
 Package: RandomWalkRestartMH
 Type: Package
 Title: Random walk with restart on multiplex and heterogeneous Networks
-Version: 0.99.4
-Date: 2018-03-28
-Author: Alberto Valdeolivas Urbelz <alvaldeolivas@gmail.com>
-Maintainer: Alberto Valdeolivas Urbelz <alvaldeolivas@gmail.com>
+Version: 1.9.1
+Date: 2020-08-05
+Authors@R: c(
+    person(given = "Alberto",
+           family = "Valdeolivas",
+           role = c("cre","aut","ctb"),
+           email = "alvaldeolivas@gmail.com",
+           comment = c(ORCID = "0000-0001-5482-9023")))
 Description: This package performs Random Walk with Restart on multiplex and
     heterogeneous networks. It is described in the following article:
     "Random Walk With Restart On Multiplex And Heterogeneous Biological 
-    Networks". https://www.biorxiv.org/content/early/2017/08/30/134734 .
+    Networks" 
+    <https://academic.oup.com/bioinformatics/article/35/3/497/5055408>.
 License: GPL (>= 2)
-URL: https://www.biorxiv.org/content/early/2017/08/30/134734
+URL: https://github.com/alberto-valdeolivas/RandomWalkRestartMH
+BugReports: https://github.com/alberto-valdeolivas/RandomWalkRestartMH/issues
 Encoding: UTF-8
 LazyData: true
-Imports: igraph, Matrix, dnet, methods
 Depends: R(>= 3.5.0)
-RoxygenNote: 6.0.1
-biocViews: GenePrediction, NetworkInference, SomaticMutation,
-        BiomedicalInformatics, MathematicalBiology, SystemsBiology,
-        GraphAndNetwork, Pathways, BioCarta, KEGG, Reactome, Network
-Suggests: BiocStyle, testthat
+RoxygenNote: 7.1.1
+Imports: 
+    igraph, 
+    Matrix, 
+    dnet, 
+    methods
+biocViews: 
+    GenePrediction, 
+    NetworkInference, 
+    SomaticMutation,
+    BiomedicalInformatics, 
+    MathematicalBiology, 
+    SystemsBiology,
+    GraphAndNetwork, 
+    Pathways, 
+    BioCarta, 
+    KEGG, 
+    Reactome, 
+    Network
+Suggests: 
+    BiocStyle,
+    knitr,
+    testthat
+VignetteBuilder: knitr
 NeedsCompilation: no
 Packaged: 2018-04-09 20:31:46 UTC; alvaldeolivas
