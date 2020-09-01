@@ -81,7 +81,8 @@ The user can integrate single networks (monoplex networks) to create
 a multiplex network. The multiplex network can also be integrated, thanks to
 bipartite relationships, with another multiplex network containing nodes of 
 different nature. Proceeding this way, a network both multiplex and 
-heterogeneous will be generated. To do so, folow the instructions detailed below
+heterogeneous will be generated. To do so, follow the instructions detailed 
+below
 
 Please note that this version of the package does not deal with directed 
 networks. New features will be included in future updated versions of 
@@ -500,8 +501,7 @@ PPI_PATH_HetTranMatrix <- compute.transition.matrix(PPI_PATH_Disease_Net)
 SeedDisease <- c("269880")
 SeedGene <- c("PIK3R1")
 
-RWRH_PPI_PATH_Disease_Results <-Random.Walk.Restart.MultiplexHet(PPI_PATH_HetTranMatrix,
-    PPI_PATH_Disease_Net,SeedGene,SeedDisease)
+RWRH_PPI_PATH_Disease_Results <-      Random.Walk.Restart.MultiplexHet(PPI_PATH_HetTranMatrix, PPI_PATH_Disease_Net,SeedGene,SeedDisease)
 ```
 
 We can see that the results have changed due to the weights and the additional

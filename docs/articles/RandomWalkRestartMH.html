@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RandomWalkRestartMH</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.2</span>
       </span>
     </div>
 
@@ -136,7 +136,7 @@
 <li><p>A <strong>multiplex and heterogeneous network</strong>, which is built by linking the nodes in every layer of a multiplex network to nodes of different nature thanks to bipartite edges.</p></li>
 <li><p>A <strong>full multiplex and heterogeneous network</strong>, in which the two networks connected by bipartite interactions are of multiplex nature. The RWR particle can now explore the full multiplex-heterogeneous network.</p></li>
 </ul>
-<p>The user can integrate single networks (monoplex networks) to create a multiplex network. The multiplex network can also be integrated, thanks to bipartite relationships, with another multiplex network containing nodes of different nature. Proceeding this way, a network both multiplex and heterogeneous will be generated. To do so, folow the instructions detailed below</p>
+<p>The user can integrate single networks (monoplex networks) to create a multiplex network. The multiplex network can also be integrated, thanks to bipartite relationships, with another multiplex network containing nodes of different nature. Proceeding this way, a network both multiplex and heterogeneous will be generated. To do so, follow the instructions detailed below</p>
 <p>Please note that this version of the package does not deal with directed networks. New features will be included in future updated versions of <em><a href="https://bioconductor.org/packages/3.11/RandomWalkRestartMH">RandomWalkRestartMH</a></em>.</p>
 </div>
 <div id="installation-of-the-randomwalkrestartmh-package" class="section level1">
@@ -183,9 +183,9 @@
 ## Number of Nodes:
 ## [1] 4317
 ## 
-## IGRAPH 61e7148 UN-- 4317 18062 -- 
-## + attr: name (v/c), type (e/c)
-## + edges from 61e7148 (vertex names):
+## IGRAPH 605d822 UNW- 4317 18062 -- 
+## + attr: name (v/c), weight (e/n), type (e/c)
+## + edges from 605d822 (vertex names):
 ##  [1] AAMP   --VPS52     AAMP   --BHLHE40   AAMP   --GABARAPL2 AAMP   --MAP1LC3B 
 ##  [5] VPS52  --TXN2      VPS52  --DDX6      VPS52  --MFAP1     VPS52  --PRKAA1   
 ##  [9] VPS52  --LMO4      VPS52  --STX11     VPS52  --KANK2     VPS52  --PPP1R18  
@@ -271,9 +271,9 @@ Figure 1: RWR on a monoplex PPI Network. Network representation of the top 15 ra
 ## Number of Nodes Multiplex 1:
 ## [1] 4317
 ## 
-## IGRAPH 61e7148 UN-- 4317 18062 -- 
-## + attr: name (v/c), type (e/c)
-## + edges from 61e7148 (vertex names):
+## IGRAPH 605d822 UNW- 4317 18062 -- 
+## + attr: name (v/c), weight (e/n), type (e/c)
+## + edges from 605d822 (vertex names):
 ##  [1] AAMP   --VPS52     AAMP   --BHLHE40   AAMP   --GABARAPL2 AAMP   --MAP1LC3B 
 ##  [5] VPS52  --TXN2      VPS52  --DDX6      VPS52  --MFAP1     VPS52  --PRKAA1   
 ##  [9] VPS52  --LMO4      VPS52  --STX11     VPS52  --KANK2     VPS52  --PPP1R18  
@@ -290,9 +290,9 @@ Figure 1: RWR on a monoplex PPI Network. Network representation of the top 15 ra
 ## Number of Nodes Multiplex 2:
 ## [1] 6947
 ## 
-## IGRAPH 79f5a3e UN-- 6947 28246 -- 
-## + attr: name (v/c), type (e/c)
-## + edges from 79f5a3e (vertex names):
+## IGRAPH 96daa02 UNW- 6947 28246 -- 
+## + attr: name (v/c), weight (e/n), type (e/c)
+## + edges from 96daa02 (vertex names):
 ##  [1] 100050--122470 100050--227330 100050--259200 100050--305400 100050--601803
 ##  [6] 100070--105800 100070--105805 100070--107550 100070--120000 100070--130090
 ## [11] 100070--132900 100070--154750 100070--180300 100070--192310 100070--208060
@@ -407,9 +407,9 @@ Figure 2: RWR-H on a heterogeneous PPI-Disease Network. Network representation o
 ## Number of Nodes:
 ## [1] 4899
 ## 
-## IGRAPH ae89d80 UN-- 4899 18062 -- 
-## + attr: name (v/c), type (e/c)
-## + edges from ae89d80 (vertex names):
+## IGRAPH 2869f75 UNW- 4899 18062 -- 
+## + attr: name (v/c), weight (e/n), type (e/c)
+## + edges from 2869f75 (vertex names):
 ##  [1] AAMP   --VPS52     AAMP   --BHLHE40   AAMP   --GABARAPL2 AAMP   --MAP1LC3B 
 ##  [5] VPS52  --TXN2      VPS52  --DDX6      VPS52  --MFAP1     VPS52  --PRKAA1   
 ##  [9] VPS52  --LMO4      VPS52  --STX11     VPS52  --KANK2     VPS52  --PPP1R18  
@@ -420,9 +420,9 @@ Figure 2: RWR-H on a heterogeneous PPI-Disease Network. Network representation o
 ## [29] BHLHE40--COX5B     BHLHE40--UBE2I     BHLHE40--MAGED1    BHLHE40--PLEKHB2  
 ## + ... omitted several edges
 ## 
-## IGRAPH b47b9bb UN-- 4899 62602 -- 
-## + attr: name (v/c), type (e/c)
-## + edges from b47b9bb (vertex names):
+## IGRAPH 77c0e4d UNW- 4899 62602 -- 
+## + attr: name (v/c), weight (e/n), type (e/c)
+## + edges from 77c0e4d (vertex names):
 ##  [1] BANF1--PSIP1   BANF1--HMGA1   BANF1--PPP2R1A BANF1--PPP2CA  BANF1--KPNA1  
 ##  [6] BANF1--TPR     BANF1--NUP62   BANF1--NUP153  BANF1--RANBP2  BANF1--NUP54  
 ## [11] BANF1--POM121  BANF1--NUP85   BANF1--PPP2R2A BANF1--EMD     BANF1--LEMD2  
@@ -502,9 +502,9 @@ Figure 3: RWR-M on a multiplex PPI-Pathway Network. Network representation of th
 ## Number of Nodes Multiplex 1:
 ## [1] 4899
 ## 
-## IGRAPH ae89d80 UN-- 4899 18062 -- 
-## + attr: name (v/c), type (e/c)
-## + edges from ae89d80 (vertex names):
+## IGRAPH 2869f75 UNW- 4899 18062 -- 
+## + attr: name (v/c), weight (e/n), type (e/c)
+## + edges from 2869f75 (vertex names):
 ##  [1] AAMP   --VPS52     AAMP   --BHLHE40   AAMP   --GABARAPL2 AAMP   --MAP1LC3B 
 ##  [5] VPS52  --TXN2      VPS52  --DDX6      VPS52  --MFAP1     VPS52  --PRKAA1   
 ##  [9] VPS52  --LMO4      VPS52  --STX11     VPS52  --KANK2     VPS52  --PPP1R18  
@@ -515,9 +515,9 @@ Figure 3: RWR-M on a multiplex PPI-Pathway Network. Network representation of th
 ## [29] BHLHE40--COX5B     BHLHE40--UBE2I     BHLHE40--MAGED1    BHLHE40--PLEKHB2  
 ## + ... omitted several edges
 ## 
-## IGRAPH b47b9bb UN-- 4899 62602 -- 
-## + attr: name (v/c), type (e/c)
-## + edges from b47b9bb (vertex names):
+## IGRAPH 77c0e4d UNW- 4899 62602 -- 
+## + attr: name (v/c), weight (e/n), type (e/c)
+## + edges from 77c0e4d (vertex names):
 ##  [1] BANF1--PSIP1   BANF1--HMGA1   BANF1--PPP2R1A BANF1--PPP2CA  BANF1--KPNA1  
 ##  [6] BANF1--TPR     BANF1--NUP62   BANF1--NUP153  BANF1--RANBP2  BANF1--NUP54  
 ## [11] BANF1--POM121  BANF1--NUP85   BANF1--PPP2R2A BANF1--EMD     BANF1--LEMD2  
@@ -534,9 +534,9 @@ Figure 3: RWR-M on a multiplex PPI-Pathway Network. Network representation of th
 ## Number of Nodes Multiplex 2:
 ## [1] 6947
 ## 
-## IGRAPH 79f5a3e UN-- 6947 28246 -- 
-## + attr: name (v/c), type (e/c)
-## + edges from 79f5a3e (vertex names):
+## IGRAPH 96daa02 UNW- 6947 28246 -- 
+## + attr: name (v/c), weight (e/n), type (e/c)
+## + edges from 96daa02 (vertex names):
 ##  [1] 100050--122470 100050--227330 100050--259200 100050--305400 100050--601803
 ##  [6] 100070--105800 100070--105805 100070--107550 100070--120000 100070--130090
 ## [11] 100070--132900 100070--154750 100070--180300 100070--192310 100070--208060
@@ -685,8 +685,7 @@ Figure 4: RWR-MH on a multiplex and heterogeneous network (PPI-Pathway-Disease).
 <div class="sourceCode" id="cb63"><html><body><pre class="r"><span class="no">SeedDisease</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"269880"</span>)
 <span class="no">SeedGene</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"PIK3R1"</span>)
 
-<span class="no">RWRH_PPI_PATH_Disease_Results</span> <span class="kw">&lt;-</span><span class="fu"><a href="../reference/Random.Walk.Restart.MultiplexHet.html">Random.Walk.Restart.MultiplexHet</a></span>(<span class="no">PPI_PATH_HetTranMatrix</span>,
-    <span class="no">PPI_PATH_Disease_Net</span>,<span class="no">SeedGene</span>,<span class="no">SeedDisease</span>)</pre></body></html></div>
+<span class="no">RWRH_PPI_PATH_Disease_Results</span> <span class="kw">&lt;-</span>      <span class="fu"><a href="../reference/Random.Walk.Restart.MultiplexHet.html">Random.Walk.Restart.MultiplexHet</a></span>(<span class="no">PPI_PATH_HetTranMatrix</span>, <span class="no">PPI_PATH_Disease_Net</span>,<span class="no">SeedGene</span>,<span class="no">SeedDisease</span>)</pre></body></html></div>
 <p>We can see that the results have changed due to the weights and the additional layer in the disease multiplex network.</p>
 <div class="sourceCode" id="cb64"><html><body><pre class="r"><span class="no">RWRH_PPI_PATH_Disease_Results</span></pre></body></html></div>
 <pre><code>## Top 10 ranked global nodes:
@@ -755,22 +754,22 @@ Figure 4: RWR-MH on a multiplex and heterogeneous network (PPI-Pathway-Disease).
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] igraph_1.2.5              RandomWalkRestartMH_1.9.1
+## [1] igraph_1.2.5              RandomWalkRestartMH_1.9.2
 ## [3] BiocStyle_2.16.0         
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_1.0.5          highr_0.8           compiler_4.0.2     
 ##  [4] BiocManager_1.30.10 tools_4.0.2         digest_0.6.25      
 ##  [7] dnet_1.1.7          evaluate_0.14       memoise_1.1.0      
-## [10] nlme_3.1-147        lattice_0.20-41     pkgconfig_2.0.3    
+## [10] nlme_3.1-149        lattice_0.20-41     pkgconfig_2.0.3    
 ## [13] rlang_0.4.7         Matrix_1.2-18       graph_1.66.0       
 ## [16] rstudioapi_0.11     Rgraphviz_2.32.0    yaml_2.2.1         
 ## [19] parallel_4.0.2      hexbin_1.28.1       pkgdown_1.5.1      
 ## [22] xfun_0.16           stringr_1.4.0       knitr_1.29         
-## [25] desc_1.2.0          fs_1.4.2            stats4_4.0.2       
+## [25] desc_1.2.0          fs_1.5.0            stats4_4.0.2       
 ## [28] rprojroot_1.3-2     grid_4.0.2          R6_2.4.1           
 ## [31] rmarkdown_2.3       bookdown_0.20       magrittr_1.5       
-## [34] backports_1.1.8     htmltools_0.5.0     MASS_7.3-51.6      
+## [34] backports_1.1.8     htmltools_0.5.0     MASS_7.3-52        
 ## [37] BiocGenerics_0.34.0 assertthat_0.2.1    ape_5.4            
 ## [40] supraHex_1.26.0     stringi_1.4.6       crayon_1.3.4</code></pre>
 </div>

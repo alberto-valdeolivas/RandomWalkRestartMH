@@ -81,7 +81,7 @@ matrix of a multiplex network provided as a Multiplex object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RandomWalkRestartMH</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.2</span>
       </span>
     </div>
 
@@ -182,7 +182,17 @@ not following the specific edges of each layer.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>m1</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span>), <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>m2</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>4</span>), <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>multiObject</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create.multiplex.html'>create.multiplex</a></span>(<span class='no'>m1</span>,<span class='no'>m2</span>)</div><div class='output co'>#&gt; <span class='error'>Error in create.multiplex.default(m1, m2): The input object should be a list of graphs.</span></div><div class='input'><span class='fu'>compute.adjacency.matrix</span>(<span class='no'>multiObject</span>)</div><div class='output co'>#&gt; <span class='error'>Error in is(x, "Multiplex"): object 'multiObject' not found</span></div><div class='input'>
+<span class='no'>multiObject</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create.multiplex.html'>create.multiplex</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>m1</span><span class='kw'>=</span><span class='no'>m1</span>,<span class='kw'>m2</span><span class='kw'>=</span><span class='no'>m2</span>))
+<span class='fu'>compute.adjacency.matrix</span>(<span class='no'>multiObject</span>)</div><div class='output co'>#&gt; 8 x 8 sparse Matrix of class "dgCMatrix"
+#&gt;     1_1 2_1 3_1 4_1 1_2 2_2 3_2 4_2
+#&gt; 1_1 .   0.5 0.5 .   0.5 .   .   .  
+#&gt; 2_1 0.5 .   0.5 .   .   0.5 .   .  
+#&gt; 3_1 0.5 0.5 .   .   .   .   0.5 .  
+#&gt; 4_1 .   .   .   .   .   .   .   0.5
+#&gt; 1_2 0.5 .   .   .   .   .   0.5 0.5
+#&gt; 2_2 .   0.5 .   .   .   .   0.5 .  
+#&gt; 3_2 .   .   0.5 .   0.5 0.5 .   0.5
+#&gt; 4_2 .   .   .   0.5 0.5 .   0.5 .  </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

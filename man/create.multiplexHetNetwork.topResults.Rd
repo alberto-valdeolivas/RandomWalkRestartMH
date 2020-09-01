@@ -18,12 +18,13 @@ described in the following argument.}
 function \code{create.multiplexHet} representing a multiplex and
 heterogeneous network.}
 
-\item{bipartite_relations}{A data frame containing the relationships between
-the nodes of the multiplex network and the nodes of the second network of the
-heterogeneous system. The data frame should contain two columns: the first
-one with the nodes of the multiplex network; the second one with the nodes of
-the second network. Every node should be present in their corresponing
-network.}
+\item{bipartite_relations}{A data frame containing the relationships (bipartite
+interactions) between the nodes of the first multiplex network and the nodes 
+of the second multiplex of the heterogeneous system. The data frame should 
+contain two or three columns: the first one with the nodes of the multiplex 
+network; the second one with the nodes of the second network. 
+The third one is not mandatory and it should contain the weights. Every node 
+should be present in their corresponding multiplex network.}
 
 \item{bipartite_name}{A vector containing the name for the bipartite
 relations to be integrated as part of the resulting network. It is included

@@ -38,6 +38,8 @@ simplify.layers <- function(Input_Layer){
         } else {
             E(Layer)$weight <- rep(1, length(weigths_layer))
         }
+    } else {
+        E(Layer)$weight <- rep(1, ecount(Layer))
     }
     
     ## Simple Graphs
