@@ -66,7 +66,7 @@ compute.adjacency.matrix <- function(x,delta = 0.5)
   
   counter <- 0 
   Layers_List <- lapply(x[Layers_Names],function(x){
-    
+
     counter <<- counter + 1;    
     if (is_weighted(x)){ 
       Adjacency_Layer <-  as_adjacency_matrix(x,sparse = TRUE, 
@@ -245,7 +245,7 @@ Random.Walk.Restart.Multiplex <- function(...) {
 #'@rdname Random.Walk.Restart.Multiplex
 #'@export
 Random.Walk.Restart.Multiplex.default <- function(x, MultiplexObject, Seeds, 
-                                                  r=0.7,tau,MeanType="Geometric", DispResults="TopScores",...){
+  r=0.7,tau,MeanType="Geometric", DispResults="TopScores",...){
   
   ### We control the different values.
   if (!is(x,"dgCMatrix")){
@@ -266,6 +266,7 @@ Random.Walk.Restart.Multiplex.default <- function(x, MultiplexObject, Seeds,
   } else {
     if (!all(Seeds %in% MultiplexObject$Pool_of_Nodes)){
       stop("Some of the seeds are not nodes of the network")
+
     }
   }
   
@@ -666,8 +667,8 @@ Random.Walk.Restart.MultiplexHet.default <- function(x, MultiplexHet_Object,
           stop("Some of the inputs seeds are not nodes of the second
                input network")
         }
-        }
       }
+    }
   }
   
   if (r >= 1 || r <= 0) {
@@ -695,7 +696,7 @@ Random.Walk.Restart.MultiplexHet.default <- function(x, MultiplexHet_Object,
       stop("The sum of the components of tau divided by the number of 
            layers should be 1")}
     }
-  
+
   if(!(MeanType %in% c("Geometric","Arithmetic","Sum"))){
     stop("The type mean should be Geometric, Arithmetic or Sum")
   }
@@ -794,7 +795,7 @@ Random.Walk.Restart.MultiplexHet.default <- function(x, MultiplexHet_Object,
   
   class(RWRMH_ranking) <- "RWRMH_Results"
   return(RWRMH_ranking)
-  }
+}
 
 #' @method print RWRMH_Results
 #' @export

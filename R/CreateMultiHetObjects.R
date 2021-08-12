@@ -48,7 +48,7 @@ create.multiplex <- function(...){
 #' @rdname create.multiplex
 #' @export
 create.multiplex.default <- function(LayersList,...){
-  
+
   if (!class(LayersList) == "list"){
     stop("The input object should be a list of graphs.")
   }
@@ -247,7 +247,7 @@ create.multiplexHet.default <- function(Multiplex_object_1, Multiplex_object_2,
           }
       }
     }
-  
+
   ## Multiplex graph
   Nodes_Multiplex_1 <- Multiplex_object_1$Pool_of_Nodes
   Nodes_Multiplex_2 <- Multiplex_object_2$Pool_of_Nodes
@@ -281,7 +281,7 @@ create.multiplexHet.default <- function(Multiplex_object_1, Multiplex_object_2,
 #' @export
 print.MultiplexHet <- function(x,...)
 {
-  
+
   cat("Number of Layers Multiplex 1:\n")
   print(x$Multiplex1$Number_of_Layers)
   cat("\nNumber of Nodes Multiplex 1:\n")

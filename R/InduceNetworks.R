@@ -156,7 +156,7 @@ create.multiplexHetNetwork.topResults <-
     if (!isMultiplexHet(MultiplexHetObject)) {
       stop("Not a Multiplex Heterogeneous object")
     }
-    
+
     if (!isRWRMH_Results(RWRMH_Results_Object)){
       stop("Not Results of RWR-MH")
     }
@@ -186,7 +186,7 @@ create.multiplexHetNetwork.topResults <-
           }
         }
     }
-    
+
     if (ncol(bipartite_relations) == 3){
       b <- 1
       weigths_bipartite <- as.numeric(bipartite_relations[, 3])
@@ -221,7 +221,7 @@ create.multiplexHetNetwork.topResults <-
     
     bipartite_relations$type <- bipartite_name
     colnames(bipartite_relations) <- c("from", "to", "weight", "type")
-    
+
     Number_Layers_1 <- MultiplexHetObject$Multiplex1$Number_of_Layers 
     Number_Layers_2 <- MultiplexHetObject$Multiplex2$Number_of_Layers 
     
@@ -251,4 +251,4 @@ create.multiplexHetNetwork.topResults <-
       dNetInduce(g=Multiplex_Heterogeneous_Network, nodes_query=Query_Nodes, 
                  knn=0,remove.loops=FALSE, largest.comp=FALSE)
     return(Induced_Network)
-      }
+    }

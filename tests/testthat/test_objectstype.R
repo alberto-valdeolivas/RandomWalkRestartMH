@@ -35,4 +35,5 @@ test_that("Objects are of the expected type", {
   expect_equal(isMultiplexHet(multiHetObject), TRUE)
   expect_equal(isRWRM_Results(RWR_MultiResults), TRUE)
   expect_equal(isRWRMH_Results(RWR_MultiHetResults), TRUE)
+
 })

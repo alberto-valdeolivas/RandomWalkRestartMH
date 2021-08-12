@@ -21,7 +21,7 @@ geometric.mean <- function(Scores, L, N) {
 ## Functions to perform Random Walk with Restart on Multiplex Networks.
 
 simplify.layers <- function(Input_Layer){
-  
+
   ## Undirected Graphs
   Layer <- as.undirected(Input_Layer, mode = c("collapse"),
                          edge.attr.comb = igraph_opt("edge.attr.comb"))
@@ -80,12 +80,13 @@ get.bipartite.graph <-
   function(Names_Mul_1, Names_Mul_2, Nodes_relation, Number_Nodes_1,
            Number_Nodes_2){
     
+
     Bipartite_matrix <- Matrix(data=0, nrow=Number_Nodes_1, ncol=Number_Nodes_2)
     Names_Mul1_order <- sort(Names_Mul_1)
     Names_Mul2_order <- sort(Names_Mul_2)
     rownames(Bipartite_matrix) <- Names_Mul1_order
     colnames(Bipartite_matrix) <- Names_Mul2_order
-    
+
     for (i in seq_len(Number_Nodes_1)){
       current_node1 <- Names_Mul_1[i]
       current_node2 <-
@@ -98,6 +99,7 @@ get.bipartite.graph <-
             ## We need to identify the position on the matrix.
             index <- which(colnames(Bipartite_matrix) %in% 
                              current_node2[j]) 
+
             
             Bipartite_matrix[i,index] <- 1
           }
@@ -291,7 +293,7 @@ get.seed.scores.multHet <-
                               stringsAsFactors = FALSE)
     
     return(Seeds_Score)
-  }
+}
 
 geometric.mean <- function(Scores, L, N) {
   
