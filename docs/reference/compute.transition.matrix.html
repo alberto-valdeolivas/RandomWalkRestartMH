@@ -91,7 +91,7 @@ object." />
         <li>
   <a href="../index.html">
     <span class="fas fa-home fa-lg"></span>
-
+     
   </a>
 </li>
 <li>
@@ -108,7 +108,19 @@ object." />
         <li>
   <a href="https://github.com/alberto-valdeolivas/RandomWalkRestartMH/">
     <span class="fab fa-github fa-lg"></span>
-
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/alvaldeolivas">
+    <span class="fab fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.marseille-medical-genetics.org/a-baudot/">
+    <span class="fas fa-university"></span>
+     
   </a>
 </li>
       </ul>
@@ -135,7 +147,7 @@ matrix of a multiplex heterogeneous network provided as a <code>MultiplexHet</co
 object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compute.transition.matrix</span><span class='op'>(</span><span class='va'>x</span>,lambda <span class='op'>=</span> <span class='fl'>0.5</span>, delta<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>compute.transition.matrix</span><span class='op'>(</span><span class='va'>x</span>,lambda <span class='op'>=</span> <span class='fl'>0.5</span>, delta1<span class='op'>=</span><span class='fl'>0.5</span>, delta2<span class='op'>=</span><span class='fl'>0.5</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,11 +165,16 @@ jumping within a network or change to the other network of the heterogeneous
 system. It is set by default to 0.5. See more details below.</p></td>
     </tr>
     <tr>
-      <th>delta</th>
+      <th>delta1</th>
       <td><p>A numeric value between 0 and 1. It sets the probability
-of performing inter-layer versus intra-layer transitions. It is set by
-default to 0.5. See more details below.</p></td>
-
+of performing inter-layer versus intra-layer transitions in the first 
+multiplex. It is set by default to 0.5. See more details below.</p></td>
+    </tr>
+    <tr>
+      <th>delta2</th>
+      <td><p>A numeric value between 0 and 1. It sets the probability
+of performing inter-layer versus intra-layer transitions in the second 
+multiplex. It is set by default to 0.5. See more details below.</p></td>
     </tr>
     </table>
 
@@ -192,13 +209,42 @@ not following the specific edges of each layer.</p></li>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>multiObject</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.multiplex.html'>create.multiplex</a></span><span class='op'>(</span><span class='va'>m1</span>,<span class='va'>m2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in create.multiplex.default(m1, m2): The input object should be a list of graphs.</span></div><div class='input'><span class='va'>h1</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"C"</span>,<span class='st'>"B"</span>,<span class='st'>"E"</span>,<span class='st'>"E"</span>,<span class='st'>"D"</span>,<span class='st'>"E"</span>,<span class='st'>"C"</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>multiObject_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.multiplex.html'>create.multiplex</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>m1<span class='op'>=</span><span class='va'>m1</span>,m2<span class='op'>=</span><span class='va'>m2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>h1</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"C"</span>,<span class='st'>"B"</span>,<span class='st'>"E"</span>,<span class='st'>"E"</span>,<span class='st'>"D"</span>,<span class='st'>"E"</span>,<span class='st'>"C"</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>bipartite_relations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>m<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span>,h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"E"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>multiHetObject</span> <span class='op'>&lt;-</span> 
-    <span class='fu'><a href='create.multiplexHet.html'>create.multiplexHet</a></span><span class='op'>(</span><span class='va'>multiObject</span>, <span class='va'>h1</span>,<span class='va'>bipartite_relations</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in create.multiplexHet(multiObject, h1, bipartite_relations): object 'multiObject' not found</span></div><div class='input'><span class='fu'>compute.transition.matrix</span><span class='op'>(</span><span class='va'>multiHetObject</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in is(x, "MultiplexHet"): object 'multiHetObject' not found</span></div><div class='input'>
+<span class='va'>multiObject_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.multiplex.html'>create.multiplex</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>h1<span class='op'>=</span><span class='va'>h1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>multiHetObject</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.multiplexHet.html'>create.multiplexHet</a></span><span class='op'>(</span><span class='va'>multiObject_1</span>, <span class='va'>multiObject_2</span>,
+    <span class='va'>bipartite_relations</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>checking input arguments...</span></div><div class='output co'>#&gt; <span class='message'>Generating bipartite matrix...</span></div><div class='output co'>#&gt; <span class='message'>Expanding bipartite matrix to fit the multiplex network...</span></div><div class='input'><span class='fu'>compute.transition.matrix</span><span class='op'>(</span><span class='va'>multiHetObject</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Computing adjacency matrix of the first Multiplex network...</span></div><div class='output co'>#&gt; <span class='message'>Computing adjacency matrix of the second Multiplex network...</span></div><div class='output co'>#&gt; <span class='message'>Computing inter-subnetworks transitions...</span></div><div class='output co'>#&gt; <span class='message'>Computing intra-subnetworks transitions...</span></div><div class='output co'>#&gt; <span class='message'>Combining inter e intra layer probabilities into the global </span>
+#&gt; <span class='message'>          Transition Matix</span></div><div class='output co'>#&gt; 13 x 13 sparse Matrix of class "dgCMatrix"</div><div class='output co'>#&gt; <span class='message'>   [[ suppressing 13 column names '1_1', '2_1', '3_1' ... ]]</span></div><div class='output co'>#&gt;                                                                               
+#&gt; 1_1 .         0.3333333 0.1666667 . 0.1666667 .   .     .         0.25 . .   .
+#&gt; 2_1 0.1666667 .         0.1666667 . .         0.5 .     .         .    . .   .
+#&gt; 3_1 0.1666667 0.3333333 .         . .         .   0.125 .         .    . .   .
+#&gt; 4_1 .         .         .         . .         .   .     0.3333333 .    . .   .
+#&gt; 1_2 0.1666667 .         .         . .         .   0.125 0.3333333 0.25 . .   .
+#&gt; 2_2 .         0.3333333 .         . .         .   0.125 .         .    . .   .
+#&gt; 3_2 .         .         0.1666667 . 0.1666667 0.5 .     0.3333333 .    . .   .
+#&gt; 4_2 .         .         .         1 0.1666667 .   0.125 .         .    . .   .
+#&gt; A_1 0.5000000 .         .         . 0.5000000 .   .     .         .    . 0.5 .
+#&gt; B_1 .         .         .         . .         .   .     .         .    . .   .
+#&gt; C_1 .         .         .         . .         .   .     .         0.50 . .   .
+#&gt; D_1 .         .         .         . .         .   .     .         .    . .   .
+#&gt; E_1 .         .         0.5000000 . .         .   0.500 .         .    1 0.5 1
+#&gt;              
+#&gt; 1_1 .        
+#&gt; 2_1 .        
+#&gt; 3_1 0.2500000
+#&gt; 4_1 .        
+#&gt; 1_2 .        
+#&gt; 2_2 .        
+#&gt; 3_2 0.2500000
+#&gt; 4_2 .        
+#&gt; A_1 .        
+#&gt; B_1 0.1666667
+#&gt; C_1 0.1666667
+#&gt; D_1 0.1666667
+#&gt; E_1 .        </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

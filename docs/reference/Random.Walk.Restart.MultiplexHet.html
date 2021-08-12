@@ -93,7 +93,7 @@ MultiplexHet object). See more details about the algorithm below." />
         <li>
   <a href="../index.html">
     <span class="fas fa-home fa-lg"></span>
-
+     
   </a>
 </li>
 <li>
@@ -110,7 +110,19 @@ MultiplexHet object). See more details about the algorithm below." />
         <li>
   <a href="https://github.com/alberto-valdeolivas/RandomWalkRestartMH/">
     <span class="fab fa-github fa-lg"></span>
-
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/alvaldeolivas">
+    <span class="fab fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.marseille-medical-genetics.org/a-baudot/">
+    <span class="fas fa-university"></span>
+     
   </a>
 </li>
       </ul>
@@ -141,8 +153,19 @@ Walk with Restart on a Multiplex and Heterogeneous network (on a
     <pre class="usage"><span class='fu'>Random.Walk.Restart.MultiplexHet</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>Random.Walk.Restart.MultiplexHet</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>MultiplexHet_Object</span>,
-  <span class='va'>Multiplex_Seed_Nodes</span>, <span class='va'>SecondNet_Seed_Nodes</span>, r <span class='op'>=</span> <span class='fl'>0.7</span>, <span class='va'>tau</span>, eta <span class='op'>=</span> <span class='fl'>0.5</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>Random.Walk.Restart.MultiplexHet</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>MultiplexHet_Object</span>,
+  <span class='va'>Multiplex1_Seeds</span>,
+  <span class='va'>Multiplex2_Seeds</span>,
+  r <span class='op'>=</span> <span class='fl'>0.7</span>,
+  <span class='va'>tau1</span>,
+  <span class='va'>tau2</span>,
+  eta <span class='op'>=</span> <span class='fl'>0.5</span>,
+  MeanType <span class='op'>=</span> <span class='st'>"Geometric"</span>,
+  DispResults <span class='op'>=</span> <span class='st'>"TopScores"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,14 +187,16 @@ function <code>create.multiplexHet</code> representing a multiplex
 and heterogeneous network.</p></td>
     </tr>
     <tr>
-      <th>Multiplex_Seed_Nodes</th>
+      <th>Multiplex1_Seeds</th>
       <td><p>A vector containing the names of the seeds of
-the multiplex network for the Random Walk algorithm. See more details below.</p></td>
+the first multiplex network for the Random Walk algorithm. See more details 
+below.</p></td>
     </tr>
     <tr>
-      <th>SecondNet_Seed_Nodes</th>
+      <th>Multiplex2_Seeds</th>
       <td><p>A vector containing the names of the seeds of
-the second network for the Random Walk algorithm. See more details below.</p></td>
+the second multiplex network for the Random Walk algorithm. See more details 
+below.'</p></td>
     </tr>
     <tr>
       <th>r</th>
@@ -179,10 +204,18 @@ the second network for the Random Walk algorithm. See more details below.</p></t
 restarting to a seed node after each step. See more details below.</p></td>
     </tr>
     <tr>
-      <th>tau</th>
+      <th>tau1</th>
       <td><p>A vector containing the probability of restart on the seeds
-of the different multiplex layers (layers weights).
-It must have the same length than the number of layers of the multpiplex
+of the different multiplex layers (layers weights) for the first multiplex.
+It must have the same length than the number of layers of the multiplex. 
+network. The sum of its components divided by the number of layers must be 1.
+See more details below.</p></td>
+    </tr>
+    <tr>
+      <th>tau2</th>
+      <td><p>A vector containing the probability of restart on the seeds
+of the different multiplex layers (layers weights) for the second multiplex.
+It must have the same length than the number of layers of the multiplex.
 network. The sum of its components divided by the number of layers must be 1.
 See more details below.</p></td>
     </tr>
@@ -192,16 +225,34 @@ See more details below.</p></td>
 restarting in each network of the heterogeneous system (Multiplex or second
 network). See more details below.</p></td>
     </tr>
+    <tr>
+      <th>MeanType</th>
+      <td><p>The user can choose one of the following options: 
+c("Geometric","Arithmetic","Sum"). These options represent the different way
+to combine the RWR score for the same node in different layers. By default 
+and recommended Geometric (Geometric Mean.). Arithmetic is the arithmetic 
+mean and sum just sum all the scores for the same node across the different
+layers.</p></td>
+    </tr>
+    <tr>
+      <th>DispResults</th>
+      <td><p>The user can choose one of the following options: 
+c("TopScores","Alphabetic"). These options represent the way the RWR results
+would be presented. By default, and recommended, the nodes would be ordered
+by score. This option is also required to properly run the</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>RWRMH_Results</code> object. It contains two sorted rankings: The
-first one contains the nodes of the multiplex network, except the seeds,
-along with their score; The second one contains the nodes of the second
-network, except the seeds, along with their score.
-In addition, it contains two more fields describing the nodes of
-different nature used as seeds.</p>
+    <p>A <code>RWRMH_Results</code> object. It contains three sorted rankings: 
+i) The first one contains the global results, i.e. the nodes of both 
+multiplex networks along with their score; 
+ii) The second one contains the nodes of the first multiplex network,
+except the seeds, along with their score.
+iii) The last one contains the nodes of the second multiplex network, 
+excepting the seeds, along with their score
+In addition, it contains one more field describing the nodes used as seeds.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Random Walk with Restart simulates an imaginary particle which
@@ -258,17 +309,45 @@ the particle will be more likely to restart in one of the multiplex seeds.</p></
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>multiObject</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.multiplex.html'>create.multiplex</a></span><span class='op'>(</span><span class='va'>m1</span>,<span class='va'>m2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in create.multiplex.default(m1, m2): The input object should be a list of graphs.</span></div><div class='input'><span class='va'>h1</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"C"</span>,<span class='st'>"B"</span>,<span class='st'>"E"</span>,<span class='st'>"E"</span>,<span class='st'>"D"</span>,<span class='st'>"E"</span>,<span class='st'>"C"</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>multiObject_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.multiplex.html'>create.multiplex</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>m1<span class='op'>=</span><span class='va'>m1</span>,m2<span class='op'>=</span><span class='va'>m2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>h1</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"C"</span>,<span class='st'>"B"</span>,<span class='st'>"E"</span>,<span class='st'>"E"</span>,<span class='st'>"D"</span>,<span class='st'>"E"</span>,<span class='st'>"C"</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>bipartite_relations</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>m<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span><span class='op'>)</span>,h<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>,<span class='st'>"E"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>multiHetObject</span> <span class='op'>&lt;-</span> 
-    <span class='fu'><a href='create.multiplexHet.html'>create.multiplexHet</a></span><span class='op'>(</span><span class='va'>multiObject</span>,<span class='va'>h1</span>,<span class='va'>bipartite_relations</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in create.multiplexHet(multiObject, h1, bipartite_relations): object 'multiObject' not found</span></div><div class='input'><span class='va'>MultiHetTranMatrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute.transition.matrix.html'>compute.transition.matrix</a></span><span class='op'>(</span><span class='va'>multiHetObject</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in is(x, "MultiplexHet"): object 'multiHetObject' not found</span></div><div class='input'><span class='va'>Multiplex_Seeds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>SecondNet_Seeds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E"</span><span class='op'>)</span>
+<span class='va'>multiObject_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.multiplex.html'>create.multiplex</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>h1<span class='op'>=</span><span class='va'>h1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>multiHetObject</span> <span class='op'>&lt;-</span> <span class='fu'><a href='create.multiplexHet.html'>create.multiplexHet</a></span><span class='op'>(</span><span class='va'>multiObject_1</span>, <span class='va'>multiObject_2</span>,
+    <span class='va'>bipartite_relations</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>checking input arguments...</span></div><div class='output co'>#&gt; <span class='message'>Generating bipartite matrix...</span></div><div class='output co'>#&gt; <span class='message'>Expanding bipartite matrix to fit the multiplex network...</span></div><div class='input'><span class='va'>MultiHetTranMatrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='compute.transition.matrix.html'>compute.transition.matrix</a></span><span class='op'>(</span><span class='va'>multiHetObject</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Computing adjacency matrix of the first Multiplex network...</span></div><div class='output co'>#&gt; <span class='message'>Computing adjacency matrix of the second Multiplex network...</span></div><div class='output co'>#&gt; <span class='message'>Computing inter-subnetworks transitions...</span></div><div class='output co'>#&gt; <span class='message'>Computing intra-subnetworks transitions...</span></div><div class='output co'>#&gt; <span class='message'>Combining inter e intra layer probabilities into the global </span>
+#&gt; <span class='message'>          Transition Matix</span></div><div class='input'><span class='va'>Multiplex1_Seeds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>Multiplex2_Seeds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"E"</span><span class='op'>)</span>
 <span class='fu'>Random.Walk.Restart.MultiplexHet</span><span class='op'>(</span><span class='va'>MultiHetTranMatrix</span>,
-    <span class='va'>multiHetObject</span>,<span class='va'>Multiplex_Seeds</span>,<span class='va'>SecondNet_Seeds</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in Random.Walk.Restart.MultiplexHet(MultiHetTranMatrix, multiHetObject,     Multiplex_Seeds, SecondNet_Seeds): object 'MultiHetTranMatrix' not found</span></div><div class='input'>
+    <span class='va'>multiHetObject</span>,<span class='va'>Multiplex1_Seeds</span>,<span class='va'>Multiplex2_Seeds</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Top 10 ranked global nodes:
+#&gt;   NodeNames       Score
+#&gt; 1         E 0.377905492
+#&gt; 2         1 0.192229631
+#&gt; 3         A 0.061895889
+#&gt; 4         3 0.041135932
+#&gt; 5         C 0.028179658
+#&gt; 6         B 0.018895275
+#&gt; 7         D 0.018895275
+#&gt; 8         2 0.005778811
+#&gt; 9         4 0.003637140
+#&gt; 
+#&gt; Top 10 ranked nodes from the first Multiplex:
+#&gt;   NodeNames       Score
+#&gt; 3         3 0.041135932
+#&gt; 2         2 0.005778811
+#&gt; 4         4 0.003637140
+#&gt; 
+#&gt; Top 10 ranked nodes from the second Multiplex:
+#&gt;   NodeNames      Score
+#&gt; 1         A 0.06189589
+#&gt; 3         C 0.02817966
+#&gt; 2         B 0.01889527
+#&gt; 4         D 0.01889527
+#&gt; 
+#&gt; Seeds used:
+#&gt; [1] "1" "E"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

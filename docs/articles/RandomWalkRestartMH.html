@@ -47,6 +47,7 @@
 <li>
   <a href="../index.html">
     <span class="fas fa-home fa-lg"></span>
+     
   </a>
 </li>
 <li>
@@ -63,6 +64,19 @@
 <li>
   <a href="https://github.com/alberto-valdeolivas/RandomWalkRestartMH/">
     <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/alvaldeolivas">
+    <span class="fab fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.marseille-medical-genetics.org/a-baudot/">
+    <span class="fas fa-university"></span>
+     
   </a>
 </li>
       </ul>
@@ -152,7 +166,7 @@
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alberto-valdeolivas/RandomWalkRestartMH">RandomWalkRestartMH</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span></code></pre></div>
-  <pre><code>## 
+<pre><code>## 
 ## Attaching package: 'igraph'</code></pre>
 <pre><code>## The following objects are masked from 'package:stats':
 ## 
@@ -173,9 +187,9 @@
 ## Number of Nodes:
 ## [1] 4317
 ## 
-## IGRAPH 2e6eb31 UNW- 4317 18062 -- 
+## IGRAPH 2091c44 UNW- 4317 18062 -- 
 ## + attr: name (v/c), weight (e/n), type (e/c)
-## + edges from 2e6eb31 (vertex names):
+## + edges from 2091c44 (vertex names):
 ##  [1] AAMP   --VPS52     AAMP   --BHLHE40   AAMP   --GABARAPL2 AAMP   --MAP1LC3B 
 ##  [5] VPS52  --TXN2      VPS52  --DDX6      VPS52  --MFAP1     VPS52  --PRKAA1   
 ##  [9] VPS52  --LMO4      VPS52  --STX11     VPS52  --KANK2     VPS52  --PPP1R18  
@@ -197,7 +211,6 @@
                         <span class="va">PPI_MultiplexObject</span>,<span class="va">SeedGene</span><span class="op">)</span>
 <span class="co"># We display the results</span>
 <span class="va">RWR_PPI_Results</span></code></pre></div>
-
 <pre><code>## Top 10 ranked Nodes:
 ##    NodeNames       Score
 ## 1       GRB2 0.006845881
@@ -268,9 +281,9 @@ Figure 1: RWR on a monoplex PPI Network. Network representation of the top 15 ra
 ## Number of Nodes Multiplex 1:
 ## [1] 4317
 ## 
-## IGRAPH 2e6eb31 UNW- 4317 18062 -- 
+## IGRAPH 2091c44 UNW- 4317 18062 -- 
 ## + attr: name (v/c), weight (e/n), type (e/c)
-## + edges from 2e6eb31 (vertex names):
+## + edges from 2091c44 (vertex names):
 ##  [1] AAMP   --VPS52     AAMP   --BHLHE40   AAMP   --GABARAPL2 AAMP   --MAP1LC3B 
 ##  [5] VPS52  --TXN2      VPS52  --DDX6      VPS52  --MFAP1     VPS52  --PRKAA1   
 ##  [9] VPS52  --LMO4      VPS52  --STX11     VPS52  --KANK2     VPS52  --PPP1R18  
@@ -287,9 +300,9 @@ Figure 1: RWR on a monoplex PPI Network. Network representation of the top 15 ra
 ## Number of Nodes Multiplex 2:
 ## [1] 6947
 ## 
-## IGRAPH 30cddff UNW- 6947 28246 -- 
+## IGRAPH 22bc78a UNW- 6947 28246 -- 
 ## + attr: name (v/c), weight (e/n), type (e/c)
-## + edges from 30cddff (vertex names):
+## + edges from 22bc78a (vertex names):
 ##  [1] 100050--122470 100050--227330 100050--259200 100050--305400 100050--601803
 ##  [6] 100070--105800 100070--105805 100070--107550 100070--120000 100070--130090
 ## [11] 100070--132900 100070--154750 100070--180300 100070--192310 100070--208060
@@ -409,9 +422,9 @@ Figure 2: RWR-H on a heterogeneous PPI-Disease Network. Network representation o
 ## Number of Nodes:
 ## [1] 4899
 ## 
-## IGRAPH 36927e4 UNW- 4899 18062 -- 
+## IGRAPH 2949b9f UNW- 4899 18062 -- 
 ## + attr: name (v/c), weight (e/n), type (e/c)
-## + edges from 36927e4 (vertex names):
+## + edges from 2949b9f (vertex names):
 ##  [1] AAMP   --VPS52     AAMP   --BHLHE40   AAMP   --GABARAPL2 AAMP   --MAP1LC3B 
 ##  [5] VPS52  --TXN2      VPS52  --DDX6      VPS52  --MFAP1     VPS52  --PRKAA1   
 ##  [9] VPS52  --LMO4      VPS52  --STX11     VPS52  --KANK2     VPS52  --PPP1R18  
@@ -422,9 +435,9 @@ Figure 2: RWR-H on a heterogeneous PPI-Disease Network. Network representation o
 ## [29] BHLHE40--COX5B     BHLHE40--UBE2I     BHLHE40--MAGED1    BHLHE40--PLEKHB2  
 ## + ... omitted several edges
 ## 
-## IGRAPH 3692cc2 UNW- 4899 62602 -- 
+## IGRAPH 294a2ed UNW- 4899 62602 -- 
 ## + attr: name (v/c), weight (e/n), type (e/c)
-## + edges from 3692cc2 (vertex names):
+## + edges from 294a2ed (vertex names):
 ##  [1] BANF1--PSIP1   BANF1--HMGA1   BANF1--PPP2R1A BANF1--PPP2CA  BANF1--KPNA1  
 ##  [6] BANF1--TPR     BANF1--NUP62   BANF1--NUP153  BANF1--RANBP2  BANF1--NUP54  
 ## [11] BANF1--POM121  BANF1--NUP85   BANF1--PPP2R2A BANF1--EMD     BANF1--LEMD2  
@@ -510,9 +523,9 @@ Figure 3: RWR-M on a multiplex PPI-Pathway Network. Network representation of th
 ## Number of Nodes Multiplex 1:
 ## [1] 4899
 ## 
-## IGRAPH 36927e4 UNW- 4899 18062 -- 
+## IGRAPH 2949b9f UNW- 4899 18062 -- 
 ## + attr: name (v/c), weight (e/n), type (e/c)
-## + edges from 36927e4 (vertex names):
+## + edges from 2949b9f (vertex names):
 ##  [1] AAMP   --VPS52     AAMP   --BHLHE40   AAMP   --GABARAPL2 AAMP   --MAP1LC3B 
 ##  [5] VPS52  --TXN2      VPS52  --DDX6      VPS52  --MFAP1     VPS52  --PRKAA1   
 ##  [9] VPS52  --LMO4      VPS52  --STX11     VPS52  --KANK2     VPS52  --PPP1R18  
@@ -523,9 +536,9 @@ Figure 3: RWR-M on a multiplex PPI-Pathway Network. Network representation of th
 ## [29] BHLHE40--COX5B     BHLHE40--UBE2I     BHLHE40--MAGED1    BHLHE40--PLEKHB2  
 ## + ... omitted several edges
 ## 
-## IGRAPH 3692cc2 UNW- 4899 62602 -- 
+## IGRAPH 294a2ed UNW- 4899 62602 -- 
 ## + attr: name (v/c), weight (e/n), type (e/c)
-## + edges from 3692cc2 (vertex names):
+## + edges from 294a2ed (vertex names):
 ##  [1] BANF1--PSIP1   BANF1--HMGA1   BANF1--PPP2R1A BANF1--PPP2CA  BANF1--KPNA1  
 ##  [6] BANF1--TPR     BANF1--NUP62   BANF1--NUP153  BANF1--RANBP2  BANF1--NUP54  
 ## [11] BANF1--POM121  BANF1--NUP85   BANF1--PPP2R2A BANF1--EMD     BANF1--LEMD2  
@@ -542,9 +555,9 @@ Figure 3: RWR-M on a multiplex PPI-Pathway Network. Network representation of th
 ## Number of Nodes Multiplex 2:
 ## [1] 6947
 ## 
-## IGRAPH 30cddff UNW- 6947 28246 -- 
+## IGRAPH 22bc78a UNW- 6947 28246 -- 
 ## + attr: name (v/c), weight (e/n), type (e/c)
-## + edges from 30cddff (vertex names):
+## + edges from 22bc78a (vertex names):
 ##  [1] 100050--122470 100050--227330 100050--259200 100050--305400 100050--601803
 ##  [6] 100070--105800 100070--105805 100070--107550 100070--120000 100070--130090
 ## [11] 100070--132900 100070--154750 100070--180300 100070--192310 100070--208060
@@ -690,7 +703,6 @@ Figure 4: RWR-MH on a multiplex and heterogeneous network (PPI-Pathway-Disease).
 <pre><code>## Expanding bipartite matrix to fit the multiplex network...</code></pre>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">PPI_PATH_HetTranMatrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute.transition.matrix.html">compute.transition.matrix</a></span><span class="op">(</span><span class="va">PPI_PATH_Disease_Net</span><span class="op">)</span></code></pre></div>
-
 <pre><code>## Computing adjacency matrix of the first Multiplex network...</code></pre>
 <pre><code>## Computing adjacency matrix of the second Multiplex network...</code></pre>
 <pre><code>## Computing inter-subnetworks transitions...</code></pre>

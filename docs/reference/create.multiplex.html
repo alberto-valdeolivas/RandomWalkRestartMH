@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Create multiplex graphs from individual networks — create.multiplex" />
 <meta property="og:description" content="create.multiplex is a function to create a multiplex network
-(Multiplex object) from up to 6 individual networks defined as
+(Multiplex object) from a list of individual networks defined as
 igraph objects. See more details about multiplex networks below.
 If just one network is provided, a Multiplex object with one layer is
 therefore created (A monoplex network)." />
@@ -93,7 +93,7 @@ therefore created (A monoplex network)." />
         <li>
   <a href="../index.html">
     <span class="fas fa-home fa-lg"></span>
-
+     
   </a>
 </li>
 <li>
@@ -110,7 +110,19 @@ therefore created (A monoplex network)." />
         <li>
   <a href="https://github.com/alberto-valdeolivas/RandomWalkRestartMH/">
     <span class="fab fa-github fa-lg"></span>
-
+     
+  </a>
+</li>
+<li>
+  <a href="https://twitter.com/alvaldeolivas">
+    <span class="fab fa-twitter fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://www.marseille-medical-genetics.org/a-baudot/">
+    <span class="fas fa-university"></span>
+     
   </a>
 </li>
       </ul>
@@ -133,7 +145,7 @@ therefore created (A monoplex network)." />
 
     <div class="ref-description">
     <p><code>create.multiplex</code> is a function to create a multiplex network
-(<code>Multiplex</code> object) from up to 6 individual networks defined as
+(<code>Multiplex</code> object) from a list of individual networks defined as
 <code>igraph</code> objects. See more details about multiplex networks below.
 If just one network is provided, a Multiplex object with one layer is
 therefore created (A monoplex network).</p>
@@ -142,8 +154,7 @@ therefore created (A monoplex network).</p>
     <pre class="usage"><span class='fu'>create.multiplex</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>create.multiplex</span><span class='op'>(</span><span class='va'>L1</span>, L2 <span class='op'>=</span> <span class='cn'>NULL</span>, L3 <span class='op'>=</span> <span class='cn'>NULL</span>, L4 <span class='op'>=</span> <span class='cn'>NULL</span>,
-  L5 <span class='op'>=</span> <span class='cn'>NULL</span>, L6 <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>Layers_Name</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>create.multiplex</span><span class='op'>(</span><span class='va'>LayersList</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,41 +164,10 @@ therefore created (A monoplex network).</p>
       <td><p>Further arguments passed to <code>create.multiplex</code></p></td>
     </tr>
     <tr>
-      <th>L1</th>
-      <td><p>An igraph object describing a monoplex network. It will be
-integrated as the first layer of the multiplex network.</p></td>
-    </tr>
-    <tr>
-      <th>L2</th>
-      <td><p>An igraph object describing a monoplex network. It will be
-integrated as the second layer of the multiplex network. It's optional.</p></td>
-    </tr>
-    <tr>
-      <th>L3</th>
-      <td><p>An igraph object describing a monoplex network. It will be
-integrated as the third layer of the multiplex network. It's optional.</p></td>
-    </tr>
-    <tr>
-      <th>L4</th>
-      <td><p>An igraph object describing a monoplex network. It will be
-integrated as the fourth layer of the multiplex network. It's optional.</p></td>
-    </tr>
-    <tr>
-      <th>L5</th>
-      <td><p>An igraph object describing a monoplex network. It will be
-integrated as the fifth layer of the multiplex network. It's optional.</p></td>
-    </tr>
-    <tr>
-      <th>L6</th>
-      <td><p>An igraph object describing a monoplex network. It will be
-integrated as the sixth layer of the multiplex network. It's optional.</p></td>
-    </tr>
-    <tr>
-      <th>Layers_Name</th>
-      <td><p>A vector containing the names of the different layers.
-This name will be included as an attribute for all the edges of each network.
-It's optional. See more details below.</p></td>
-
+      <th>LayersList</th>
+      <td><p>A list containing igraph objects describing monoplex 
+networks in every element. We recommend to give names to the different 
+networks (igraph objects).</p></td>
     </tr>
     </table>
 
@@ -200,18 +180,8 @@ number of layers.</p>
 
     <p>A multiplex network is a collection of layers (monoplex networks)
 sharing the same nodes, but in which the edges represent relationships of
-different nature.
-The number of layers of a multiplex object can vary from 1 (monoplex
-network) up to 6. Therefore, only the first layer is mandatory. We have
-limited the number of layers to 6 in order to reduce computation times for
-very large networks.</p><ul>
-<li><p><code>Layers_Name</code>: A vector contianing the name of the different
-    layers. It's optional, but if provided the number of layers should match
-    the length of this vector. Its elements should be in the same order than
-    the graphs (<code>Layers_Name = c(L1_name, L2_name, L3_name, L4_name,
-    L5_name, L6_name)</code></p></li>
-</ul>
-
+different nature. At least a list with one element, an igraph object, should
+be provided.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='create.multiplexHet.html'>create.multiplexHet</a>,<a href='isMultiplex.html'>isMultiplex</a></code></p></div>
@@ -222,8 +192,8 @@ very large networks.</p><ul>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>m1</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='va'>m2</span> <span class='op'>&lt;-</span> <span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/make_graph.html'>graph</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span>, directed <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>multiObject</span> <span class='op'>&lt;-</span> <span class='fu'>create.multiplex</span><span class='op'>(</span><span class='va'>m1</span>,<span class='va'>m2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in create.multiplex.default(m1, m2): The input object should be a list of graphs.</span></div><div class='input'>
+<span class='va'>multiObject</span> <span class='op'>&lt;-</span> <span class='fu'>create.multiplex</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>m1<span class='op'>=</span><span class='va'>m1</span>,m2<span class='op'>=</span><span class='va'>m2</span><span class='op'>)</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
