@@ -4,8 +4,10 @@
 \name{Disease_Network}
 \alias{Disease_Network}
 \title{A disease-disease similarity network.}
-\format{An igraph object containing 28246 binary relationships between 6947
-diseases.}
+\format{
+An igraph object containing 28246 binary relationships between 6947
+diseases.
+}
 \source{
 Valdeolivas, A., Tichit, L., Navarro, C., Perrin, S., Odelin, G.,
 Levy, N., … Baudot, A. (2017). Random Walk With Restart On Multiplex And

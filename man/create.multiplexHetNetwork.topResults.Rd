@@ -18,12 +18,13 @@ described in the following argument.}
 function \code{create.multiplexHet} representing a multiplex and
 heterogeneous network.}
 
-\item{bipartite_relations}{A data frame containing the relationships between
-the nodes of the multiplex network and the nodes of the second network of the
-heterogeneous system. The data frame should contain two columns: the first
-one with the nodes of the multiplex network; the second one with the nodes of
-the second network. Every node should be present in their corresponing
-network.}
+\item{bipartite_relations}{A data frame containing the relationships (bipartite
+interactions) between the nodes of the first multiplex network and the nodes 
+of the second multiplex of the heterogeneous system. The data frame should 
+contain two or three columns: the first one with the nodes of the multiplex 
+network; the second one with the nodes of the second network. 
+The third one is not mandatory and it should contain the weights. Every node 
+should be present in their corresponding multiplex network.}
 
 \item{bipartite_name}{A vector containing the name for the bipartite
 relations to be integrated as part of the resulting network. It is included
@@ -49,17 +50,18 @@ Heterogeneous networks algorithm (a \code{RWRMH_Results} object).
 \examples{
 m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
 m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
-multiObject <- create.multiplex(m1,m2)
+multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
 h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
+multiObject_2 <- create.multiplex(list(h1=h1))
 bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
 multiHetObject <- 
-    create.multiplexHet(multiObject, h1,bipartite_relations)
+    create.multiplexHet(multiObject_1, multiObject_2,bipartite_relations)
 MultiHetTranMatrix <- compute.transition.matrix(multiHetObject)
-Multiplex_Seeds <- c(1)
-SecondNet_Seeds <- c("E")
+Multiplex1_Seeds <- c(1)
+Multiplex2_Seeds <- c("E")
 RWR_MultiHetResults <- 
     Random.Walk.Restart.MultiplexHet(MultiHetTranMatrix, multiHetObject,
-        Multiplex_Seeds,SecondNet_Seeds)
+        Multiplex1_Seeds,Multiplex2_Seeds)
 create.multiplexHetNetwork.topResults(RWR_MultiHetResults,multiHetObject,
     bipartite_relations)
 

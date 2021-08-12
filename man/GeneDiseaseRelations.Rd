@@ -4,11 +4,13 @@
 \name{GeneDiseaseRelations}
 \alias{GeneDiseaseRelations}
 \title{Diseases and their causative genes}
-\format{A data frame with 4496 rows and 2 variables:
+\format{
+A data frame with 4496 rows and 2 variables:
 \describe{
     \item{hgnc_symbol}{Gene name, in HGNC format}
     \item{mim_morbid}{Disease id, in mim code}
-}}
+}
+}
 \source{
 Valdeolivas, A., Tichit, L., Navarro, C., Perrin, S., Odelin, G.,
 Levy, N., … Baudot, A. (2017). Random Walk With Restart On Multiplex And

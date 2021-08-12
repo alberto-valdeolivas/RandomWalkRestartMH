@@ -8,8 +8,19 @@ Network}
 \usage{
 Random.Walk.Restart.MultiplexHet(...)
 
-\method{Random.Walk.Restart.MultiplexHet}{default}(x, MultiplexHet_Object,
-  Multiplex_Seed_Nodes, SecondNet_Seed_Nodes, r = 0.7, tau, eta = 0.5, ...)
+\method{Random.Walk.Restart.MultiplexHet}{default}(
+  x,
+  MultiplexHet_Object,
+  Multiplex1_Seeds,
+  Multiplex2_Seeds,
+  r = 0.7,
+  tau1,
+  tau2,
+  eta = 0.5,
+  MeanType = "Geometric",
+  DispResults = "TopScores",
+  ...
+)
 }
 \arguments{
 \item{...}{Further arguments passed to
@@ -22,32 +33,54 @@ transitions in a multiplex and heterogeneous network.}
 function \code{create.multiplexHet} representing a multiplex
 and heterogeneous network.}
 
-\item{Multiplex_Seed_Nodes}{A vector containing the names of the seeds of
-the multiplex network for the Random Walk algorithm. See more details below.}
+\item{Multiplex1_Seeds}{A vector containing the names of the seeds of
+the first multiplex network for the Random Walk algorithm. See more details 
+below.}
 
-\item{SecondNet_Seed_Nodes}{A vector containing the names of the seeds of
-the second network for the Random Walk algorithm. See more details below.}
+\item{Multiplex2_Seeds}{A vector containing the names of the seeds of
+the second multiplex network for the Random Walk algorithm. See more details 
+below.'}
 
 \item{r}{A numeric value between 0 and 1. It sets the probability of
 restarting to a seed node after each step. See more details below.}
 
-\item{tau}{A vector containing the probability of restart on the seeds
-of the different multiplex layers (layers weights).
-It must have the same length than the number of layers of the multpiplex
+\item{tau1}{A vector containing the probability of restart on the seeds
+of the different multiplex layers (layers weights) for the first multiplex.
+It must have the same length than the number of layers of the multiplex. 
+network. The sum of its components divided by the number of layers must be 1.
+See more details below.}
+
+\item{tau2}{A vector containing the probability of restart on the seeds
+of the different multiplex layers (layers weights) for the second multiplex.
+It must have the same length than the number of layers of the multiplex.
 network. The sum of its components divided by the number of layers must be 1.
 See more details below.}
 
 \item{eta}{A numeric value between 0 and 1. It controls the probability of
 restarting in each network of the heterogeneous system (Multiplex or second
 network). See more details below.}
+
+\item{MeanType}{The user can choose one of the following options: 
+c("Geometric","Arithmetic","Sum"). These options represent the different way
+to combine the RWR score for the same node in different layers. By default 
+and recommended Geometric (Geometric Mean.). Arithmetic is the arithmetic 
+mean and sum just sum all the scores for the same node across the different
+layers.}
+
+\item{DispResults}{The user can choose one of the following options: 
+c("TopScores","Alphabetic"). These options represent the way the RWR results
+would be presented. By default, and recommended, the nodes would be ordered
+by score. This option is also required to properly run the}
 }
 \value{
-A \code{RWRMH_Results} object. It contains two sorted rankings: The
-first one contains the nodes of the multiplex network, except the seeds,
-along with their score; The second one contains the nodes of the second
-network, except the seeds, along with their score.
-In addition, it contains two more fields describing the nodes of
-different nature used as seeds.
+A \code{RWRMH_Results} object. It contains three sorted rankings: 
+i) The first one contains the global results, i.e. the nodes of both 
+multiplex networks along with their score; 
+ii) The second one contains the nodes of the first multiplex network,
+except the seeds, along with their score.
+iii) The last one contains the nodes of the second multiplex network, 
+excepting the seeds, along with their score
+In addition, it contains one more field describing the nodes used as seeds.
 }
 \description{
 \code{Random.Walk.Restart.MultiplexHet} is a function to perform a Random
@@ -101,16 +134,17 @@ the particle will be more likely to restart in one of the multiplex seeds.
 \examples{
 m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
 m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
-multiObject <- create.multiplex(m1,m2)
+multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
 h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
 bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
-multiHetObject <- 
-    create.multiplexHet(multiObject,h1,bipartite_relations)
+multiObject_2 <- create.multiplex(list(h1=h1))
+multiHetObject <- create.multiplexHet(multiObject_1, multiObject_2,
+    bipartite_relations)
 MultiHetTranMatrix <- compute.transition.matrix(multiHetObject)
-Multiplex_Seeds <- c(1)
-SecondNet_Seeds <- c("E")
+Multiplex1_Seeds <- c(1)
+Multiplex2_Seeds <- c("E")
 Random.Walk.Restart.MultiplexHet(MultiHetTranMatrix,
-    multiHetObject,Multiplex_Seeds,SecondNet_Seeds)
+    multiHetObject,Multiplex1_Seeds,Multiplex2_Seeds)
 
 }
 \seealso{

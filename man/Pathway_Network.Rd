@@ -4,8 +4,10 @@
 \name{Pathway_Network}
 \alias{Pathway_Network}
 \title{A pathway network (Pathway network)}
-\format{An igraph object containing 62602 binary interactions between 3533
-proteins}
+\format{
+An igraph object containing 62602 binary interactions between 3533
+proteins
+}
 \source{
 Valdeolivas, A., Tichit, L., Navarro, C., Perrin, S., Odelin, G.,
 Levy, N., … Baudot, A. (2017). Random Walk With Restart On Multiplex And

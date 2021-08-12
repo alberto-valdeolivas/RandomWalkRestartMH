@@ -22,7 +22,7 @@ the function \code{create.multiplex}
 \examples{
 m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
 m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
-multiObject <- create.multiplex(m1,m2)
+multiObject <- create.multiplex(list(m1=m1,m2=m2))
 isMultiplex(multiObject)
 isMultiplex(m1)
 
