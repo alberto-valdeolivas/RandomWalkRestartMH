@@ -88,25 +88,27 @@ compute.adjacency.matrix <- function(x,delta = 0.5)
   MyRowNames <- unlist(lapply(Layers_List, function (x) unlist(rownames(x))))
   names(MyColNames) <- c()
   names(MyRowNames) <- c()
-  SupraAdjacencyMatrix <- (1-delta)*(bdiag(unlist(Layers_List)))
+  SupraAdjacencyMatrix <- (1-delta)*(Matrix::bdiag(unlist(Layers_List)))
   colnames(SupraAdjacencyMatrix) <-MyColNames
   rownames(SupraAdjacencyMatrix) <-MyRowNames
   
-  offdiag <- (delta/(L-1))*Idem_Matrix
-  
-  i <- seq_len(L)
-  Position_ini_row <- 1 + (i-1)*N
-  Position_end_row <- N + (i-1)*N
-  j <- seq_len(L)
-  Position_ini_col <- 1 + (j-1)*N
-  Position_end_col <- N + (j-1)*N
-  
-  for (i in seq_len(L)){
-    for (j in seq_len(L)){
-      if (j != i){
-        SupraAdjacencyMatrix[(Position_ini_row[i]:Position_end_row[i]),
-                             (Position_ini_col[j]:Position_end_col[j])] <- offdiag
-      }    
+  if (L > 1) {
+    offdiag <- (delta/(L-1))*Idem_Matrix
+    
+    i <- seq_len(L)
+    Position_ini_row <- 1 + (i-1)*N
+    Position_end_row <- N + (i-1)*N
+    j <- seq_len(L)
+    Position_ini_col <- 1 + (j-1)*N
+    Position_end_col <- N + (j-1)*N
+    
+    for (i in seq_len(L)){
+      for (j in seq_len(L)){
+        if (j != i){
+          SupraAdjacencyMatrix[(Position_ini_row[i]:Position_end_row[i]),
+                               (Position_ini_col[j]:Position_end_col[j])] <- offdiag
+        }    
+      }
     }
   }
   
