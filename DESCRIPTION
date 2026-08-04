@@ -15,7 +15,8 @@ Description: This package performs Random Walk with Restart on multiplex and
     Networks" 
     <https://academic.oup.com/bioinformatics/article/35/3/497/5055408>.
 License: GPL (>= 2)
-URL: https://github.com/alberto-valdeolivas/RandomWalkRestartMH
+URL: https://alberto-valdeolivas.github.io/RandomWalkRestartMH/,
+    https://github.com/alberto-valdeolivas/RandomWalkRestartMH
 BugReports: https://github.com/alberto-valdeolivas/RandomWalkRestartMH/issues
 Encoding: UTF-8
 LazyData: true

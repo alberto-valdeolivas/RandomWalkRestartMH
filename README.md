@@ -1,4 +1,4 @@
-<img src="man/figures/logo.png" align="left" height="90"> 
+<img src="man/figures/logo.png" alt="RandomWalkRestartMH logo" align="left" height="90">
 
 # RandomWalkRestartMH: An R package to perform Random Walk with Restart
 
