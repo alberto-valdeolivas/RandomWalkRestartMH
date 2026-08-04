@@ -1,8 +1,8 @@
 Package: RandomWalkRestartMH
 Type: Package
 Title: Random walk with restart on multiplex and heterogeneous Networks
-Version: 1.13.1
-Date: 2021-08-11
+Version: 1.13.2
+Date: 2026-08-04
 Authors@R: c(
     person(given = "Alberto",
            family = "Valdeolivas",
@@ -19,12 +19,11 @@ URL: https://github.com/alberto-valdeolivas/RandomWalkRestartMH
 BugReports: https://github.com/alberto-valdeolivas/RandomWalkRestartMH/issues
 Encoding: UTF-8
 LazyData: true
-Depends: R(>= 3.5.0)
+Depends: R (>= 3.5.0)
 RoxygenNote: 7.1.1
 Imports: 
     igraph, 
     Matrix, 
-    dnet, 
     methods
 biocViews: 
     GenePrediction, 
@@ -46,4 +45,3 @@ Suggests:
     testthat
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2018-04-09 20:31:46 UTC; alvaldeolivas

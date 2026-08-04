@@ -5,8 +5,8 @@ context("Random Walk Computation")
 ############################################################
 
 ## Multiplex
-m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
 AdjMatrix <- compute.adjacency.matrix(multiObject_1)
 AdjMatrixNorm <- normalize.multiplex.adjacency(AdjMatrix)
@@ -21,7 +21,7 @@ RWRM_ExpectedResults <- data.frame(NodeNames = c("3","2","4"),
                                    stringsAsFactors = FALSE)
 
 ## Multiplex-Heterogeneous
-h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
+h1 <- igraph::make_graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
 multiObject_2 <- create.multiplex(list(h1=h1))
 bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
 
@@ -61,4 +61,26 @@ test_that("Random Walk Results are correct", {
   expect_equal(RWR_MultiHetResults$RWRMH_Multiplex2, 
                RWRMH_Multi2ExpectedResults,
                tolerance = 0.00001)
+})
+
+test_that("custom layer weights use the documented sum-to-one convention", {
+  weighted_multiplex <- Random.Walk.Restart.Multiplex(
+    AdjMatrixNorm, multiObject_1, Multiplex1_Seeds, tau = c(0.25, 0.75))
+  expect_true(isRWRM_Results(weighted_multiplex))
+
+  weighted_heterogeneous <- Random.Walk.Restart.MultiplexHet(
+    MultiHetTranMatrix, multiHetObject, Multiplex1_Seeds, Multiplex2_Seeds,
+    tau1 = c(0.25, 0.75), tau2 = 1)
+  expect_true(isRWRMH_Results(weighted_heterogeneous))
+})
+
+test_that("invalid restart inputs and second-network seeds are rejected", {
+  expect_error(
+    Random.Walk.Restart.Multiplex(
+      AdjMatrixNorm, multiObject_1, Multiplex1_Seeds, r = 0),
+    "strictly between")
+  expect_error(
+    Random.Walk.Restart.MultiplexHet(
+      MultiHetTranMatrix, multiHetObject, Multiplex1_Seeds, "missing"),
+    "second")
 })

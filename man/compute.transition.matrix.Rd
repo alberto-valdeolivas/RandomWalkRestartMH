@@ -49,10 +49,10 @@ not following the specific edges of each layer.
 }
 }
 \examples{
-m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
-h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
+h1 <- igraph::make_graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
 bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
 multiObject_2 <- create.multiplex(list(h1=h1))
 multiHetObject <- create.multiplexHet(multiObject_1, multiObject_2,

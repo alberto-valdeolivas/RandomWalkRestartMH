@@ -34,8 +34,8 @@
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject <- create.multiplex(list(m1=m1,m2=m2))
 #'
 #'@import igraph
@@ -58,7 +58,7 @@ create.multiplex.default <- function(LayersList,...){
   SeqLayers <- seq(Number_of_Layers)
   Layers_Name <- names(LayersList)
   
-  if (!all(sapply(SeqLayers, function(x) is.igraph(LayersList[[x]])))){
+  if (!all(sapply(SeqLayers, function(x) is_igraph(LayersList[[x]])))){
     stop("Not igraph objects")
   }
   
@@ -169,10 +169,10 @@ print.Multiplex <- function(x,...)
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
-#' h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
+#' h1 <- igraph::make_graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
 #' bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
 #' multiObject_2 <- create.multiplex(list(h1=h1))
 #' create.multiplexHet(multiObject_1, multiObject_2,bipartite_relations)
@@ -253,10 +253,10 @@ create.multiplexHet.default <- function(Multiplex_object_1, Multiplex_object_2,
   Nodes_Multiplex_2 <- Multiplex_object_2$Pool_of_Nodes
   
   ## Multiplex graph features
-  Number_Nodes_1 <- Multiplex_object_1$Number_of_Nodes
+  Number_Nodes_1 <- Multiplex_object_1$Number_of_Nodes_Multiplex
   Number_Layers_1 <- Multiplex_object_1$Number_of_Layers
   
-  Number_Nodes_2 <- Multiplex_object_2$Number_of_Nodes
+  Number_Nodes_2 <- Multiplex_object_2$Number_of_Nodes_Multiplex
   Number_Layers_2 <- Multiplex_object_2$Number_of_Layers
   
   message("Generating bipartite matrix...")

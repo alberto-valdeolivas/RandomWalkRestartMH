@@ -48,16 +48,12 @@ This package was developed in the context of the following publication:
 
 ## Getting Started
 
-*RandomWalkRestartMH* is available in [Bioconductor](https://www.bioconductor.org/packages/release/bioc/html/RandomWalkRestartMH.html). 
-
-However, we suggest to use `devtools` to install the latests version from 
-this Github repository with the following command. 
+Older versions of *RandomWalkRestartMH* were distributed through Bioconductor.
+The maintained version can be installed directly from this GitHub repository:
 
 ```r
-## To install the development version from the Github repo:
-
-# install.packages("devtools")
-devtools::install_github("alberto-valdeolivas/RandomWalkRestartMH")
+# install.packages("pak")
+pak::pkg_install("alberto-valdeolivas/RandomWalkRestartMH")
 ```
 
 Then, we strongly suggest to visit the package website and explore the vignette

@@ -33,8 +33,8 @@
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject <- create.multiplex(list(m1=m1,m2=m2))
 #' compute.adjacency.matrix(multiObject)
 #'
@@ -47,7 +47,8 @@ compute.adjacency.matrix <- function(x,delta = 0.5)
   if (!isMultiplex(x) & !isMultiplexHet(x)) {
     stop("Not a Multiplex or Multiplex Heterogeneous object")
   }
-  if (delta > 1 || delta <= 0) {
+  if (length(delta) != 1L || !is.numeric(delta) ||
+      !is.finite(delta) || delta < 0 || delta > 1) {
     stop("Delta should be between 0 and 1")
   }
   
@@ -133,8 +134,8 @@ compute.adjacency.matrix <- function(x,delta = 0.5)
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject <- create.multiplex(list(m1=m1,m2=m2))
 #' AdjMatrix <- compute.adjacency.matrix(multiObject)
 #' normalize.multiplex.adjacency(AdjMatrix)
@@ -199,8 +200,8 @@ normalize.multiplex.adjacency <- function(x)
 #' restarting to a seed node after each step. See more details below.
 #' @param tau A vector containing the probability of restart on the seeds
 #' of the different layers (layers weights). It must have the same length than
-#' the number of layers of the multpiplex network. The sum of its components
-#' divided by the number of layers must be 1. See more details below.
+#' the number of layers of the multiplex network. Its components must be
+#' non-negative and sum to 1. See more details below.
 #' @param MeanType The user can choose one of the following options: 
 #' c("Geometric","Arithmetic","Sum"). These options represent the different way
 #' to combine the RWR score for the same node in different layers. By default 
@@ -226,8 +227,8 @@ normalize.multiplex.adjacency <- function(x)
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject <- create.multiplex(list(m1=m1,m2=m2))
 #' AdjMatrix <- compute.adjacency.matrix(multiObject)
 #' AdjMatrixNorm <- normalize.multiplex.adjacency(AdjMatrix)
@@ -257,7 +258,7 @@ Random.Walk.Restart.Multiplex.default <- function(x, MultiplexObject, Seeds,
   }
   
   L <- MultiplexObject$Number_of_Layers
-  N <- MultiplexObject$Number_of_Nodes
+  N <- MultiplexObject$Number_of_Nodes_Multiplex
   
   Seeds <- as.character(Seeds)
   if (length(Seeds) < 1 | length(Seeds) >= N){
@@ -270,17 +271,17 @@ Random.Walk.Restart.Multiplex.default <- function(x, MultiplexObject, Seeds,
     }
   }
   
-  if (r >= 1 || r <= 0) {
-    stop("Restart partameter should be between 0 and 1")
+  if (length(r) != 1L || !is.numeric(r) || !is.finite(r) || r <= 0 || r >= 1) {
+    stop("Restart parameter should be strictly between 0 and 1")
   }
   
   if(missing(tau)){
     tau <- rep(1,L)/L
   } else {
     tau <- as.numeric(tau)
-    if (sum(tau)/L != 1) {
-      stop("The sum of the components of tau divided by the number of 
-           layers should be 1")
+    if (length(tau) != L || any(!is.finite(tau)) || any(tau < 0) ||
+        !isTRUE(all.equal(sum(tau), 1))) {
+      stop("Tau must contain one non-negative value per layer and sum to 1")
     }
     }
   
@@ -417,10 +418,10 @@ print.RWRM_Results <- function(x,...)
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
-#' h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
+#' h1 <- igraph::make_graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
 #' bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
 #' multiObject_2 <- create.multiplex(list(h1=h1))
 #' multiHetObject <- create.multiplexHet(multiObject_1, multiObject_2,
@@ -436,15 +437,18 @@ compute.transition.matrix <- function(x,lambda = 0.5, delta1=0.5,delta2=0.5)
     stop("Not a Multiplex Heterogeneous object")
   }
   
-  if (delta1 > 1 || delta1 <= 0) {
+  if (length(delta1) != 1L || !is.numeric(delta1) ||
+      !is.finite(delta1) || delta1 < 0 || delta1 > 1) {
     stop("Delta1 should be between 0 and 1")
   }
   
-  if (delta2 > 1 || delta2 <= 0) {
+  if (length(delta2) != 1L || !is.numeric(delta2) ||
+      !is.finite(delta2) || delta2 < 0 || delta2 > 1) {
     stop("Delta2 should be between 0 and 1")
   }
   
-  if (lambda > 1 || lambda <= 0) {
+  if (length(lambda) != 1L || !is.numeric(lambda) ||
+      !is.finite(lambda) || lambda < 0 || lambda > 1) {
     stop("Lambda should be between 0 and 1")
   }
   
@@ -563,12 +567,12 @@ compute.transition.matrix <- function(x,lambda = 0.5, delta1=0.5,delta2=0.5)
 #' @param tau1 A vector containing the probability of restart on the seeds
 #' of the different multiplex layers (layers weights) for the first multiplex.
 #' It must have the same length than the number of layers of the multiplex. 
-#' network. The sum of its components divided by the number of layers must be 1.
+#' network. Its components must be non-negative and sum to 1.
 #' See more details below.
 #' @param tau2 A vector containing the probability of restart on the seeds
 #' of the different multiplex layers (layers weights) for the second multiplex.
 #' It must have the same length than the number of layers of the multiplex.
-#' network. The sum of its components divided by the number of layers must be 1.
+#' network. Its components must be non-negative and sum to 1.
 #' See more details below.
 #' @param eta A numeric value between 0 and 1. It controls the probability of
 #' restarting in each network of the heterogeneous system (Multiplex or second
@@ -603,10 +607,10 @@ compute.transition.matrix <- function(x,lambda = 0.5, delta1=0.5,delta2=0.5)
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
-#' h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
+#' h1 <- igraph::make_graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
 #' bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
 #' multiObject_2 <- create.multiplex(list(h1=h1))
 #' multiHetObject <- create.multiplexHet(multiObject_1, multiObject_2,
@@ -663,7 +667,7 @@ Random.Walk.Restart.MultiplexHet.default <- function(x, MultiplexHet_Object,
         stop("Some of the  input seeds are not nodes of the first 
              input network")
       } else {
-        if (!all(All_nodes_Multiplex2 %in% All_nodes_Multiplex2)){
+        if (!all(MultiplexSeeds2 %in% All_nodes_Multiplex2)){
           stop("Some of the inputs seeds are not nodes of the second
                input network")
         }
@@ -671,30 +675,31 @@ Random.Walk.Restart.MultiplexHet.default <- function(x, MultiplexHet_Object,
     }
   }
   
-  if (r >= 1 || r <= 0) {
-    stop("Restart partameter should be between 0 and 1")
+  if (length(r) != 1L || !is.numeric(r) || !is.finite(r) || r <= 0 || r >= 1) {
+    stop("Restart parameter should be strictly between 0 and 1")
   }
   
-  if (eta >= 1 || eta <= 0) {
-    stop("Eta partameter should be between 0 and 1")
+  if (length(eta) != 1L || !is.numeric(eta) || !is.finite(eta) ||
+      eta <= 0 || eta >= 1) {
+    stop("Eta parameter should be strictly between 0 and 1")
   }
   
   if(missing(tau1)){
     tau1 <- rep(1,NumberLayers1)/NumberLayers1
   } else {
     tau1 <- as.numeric(tau1)
-    if (sum(tau1)/NumberLayers1 != 1) {
-      stop("The sum of the components of tau divided by the number of 
-           layers should be 1")}
+    if (length(tau1) != NumberLayers1 || any(!is.finite(tau1)) ||
+        any(tau1 < 0) || !isTRUE(all.equal(sum(tau1), 1))) {
+      stop("Tau1 must contain one non-negative value per layer and sum to 1")}
     }
   
   if(missing(tau2)){
     tau2 <- rep(1,NumberLayers2)/NumberLayers2
   } else {
     tau2 <- as.numeric(tau2)
-    if (sum(tau2)/NumberLayers2 != 1) {
-      stop("The sum of the components of tau divided by the number of 
-           layers should be 1")}
+    if (length(tau2) != NumberLayers2 || any(!is.finite(tau2)) ||
+        any(tau2 < 0) || !isTRUE(all.equal(sum(tau2), 1))) {
+      stop("Tau2 must contain one non-negative value per layer and sum to 1")}
     }
 
   if(!(MeanType %in% c("Geometric","Arithmetic","Sum"))){

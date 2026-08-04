@@ -20,10 +20,33 @@ geometric.mean <- function(Scores, L, N) {
 
 ## Functions to perform Random Walk with Restart on Multiplex Networks.
 
+## Induce a subgraph from named query nodes and label its connected components.
+## This preserves the behavior previously provided by dnet::dNetInduce with
+## knn = 0, remove.loops = FALSE, largest.comp = FALSE and min.comp.size = 1.
+induce.query.subgraph <- function(graph, query.nodes) {
+  if (is.null(igraph::V(graph)$name)) {
+    graph <- igraph::set_vertex_attr(
+      graph, "name", value = as.character(igraph::V(graph)))
+  }
+
+  indices <- match(query.nodes, igraph::V(graph)$name)
+  mapped.nodes <- unique(igraph::V(graph)$name[indices[!is.na(indices)]])
+  subgraph <- igraph::induced_subgraph(graph, vids = mapped.nodes)
+
+  component.info <- igraph::components(subgraph)
+  component.sizes <- component.info$csize
+  names(component.sizes) <- seq_along(component.sizes)
+  ordered.components <- sort(component.sizes, decreasing = TRUE)
+  component.labels <- match(
+    component.info$membership, names(ordered.components))
+
+  igraph::set_vertex_attr(subgraph, "comp", value = component.labels)
+}
+
 simplify.layers <- function(Input_Layer){
 
   ## Undirected Graphs
-  Layer <- as.undirected(Input_Layer, mode = c("collapse"),
+  Layer <- as_undirected(Input_Layer, mode = c("collapse"),
                          edge.attr.comb = igraph_opt("edge.attr.comb"))
   
   ## Unweighted or Weigthed Graphs

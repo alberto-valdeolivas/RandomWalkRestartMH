@@ -91,23 +91,15 @@ networks. New features will be included in future updated versions of
 
 # Installation of the `r Biocpkg("RandomWalkRestartMH")` package
 
-First of all, you need a current version of _R_. `r Biocpkg("RandomWalkRestartMH")`
-is a freely available package deposited on _Bioconductor_ and 
-[GitHub](https://github.com/alberto-valdeolivas/RandomWalkRestartMH/).
-You can install it by running the following commands on an _R_ console:
+First of all, you need a current version of _R_. Older versions of
+`r Biocpkg("RandomWalkRestartMH")` were distributed through Bioconductor. The
+maintained version is available from
+[GitHub](https://github.com/alberto-valdeolivas/RandomWalkRestartMH/) and can be
+installed by running the following commands in an _R_ console:
 
 ```{r installation, eval=FALSE}
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-
-BiocManager::install("RandomWalkRestartMH")
-```
-
-or to install the latest version from [GitHub](https://github.com/alberto-valdeolivas/RandomWalkRestartMH/) 
-before it is released in Bioconductor: 
-
-```{r installation_2, eval=FALSE}
-devtools::install_github("alberto-valdeolivas/RandomWalkRestartMH")
+# install.packages("pak")
+pak::pkg_install("alberto-valdeolivas/RandomWalkRestartMH")
 ```
 
 # A Detailed Workflow
@@ -518,4 +510,3 @@ sessionInfo()
 ```
 
 # References
-

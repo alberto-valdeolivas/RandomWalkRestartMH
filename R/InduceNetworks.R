@@ -36,8 +36,8 @@
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject <- create.multiplex(list(m1=m1,m2=m2))
 #' AdjMatrix <- compute.adjacency.matrix(multiObject)
 #' AdjMatrixNorm <- normalize.multiplex.adjacency(AdjMatrix)
@@ -47,7 +47,6 @@
 #' create.multiplexNetwork.topResults(RWR_MultiResults,multiObject)
 #'
 #'@import igraph
-#'@importFrom dnet dNetInduce
 #'@export
 create.multiplexNetwork.topResults <- 
   function(RWRM_Result_Object,MultiplexObject,k=25) {
@@ -70,14 +69,12 @@ create.multiplexNetwork.topResults <-
     Multiplex_df <- 
       do.call(rbind.data.frame,lapply(MultiplexObject[1:L],as_data_frame))
     
-    Multiplex_Network <- graph.data.frame(Multiplex_df,directed=FALSE)
+    Multiplex_Network <- graph_from_data_frame(Multiplex_df, directed = FALSE)
     Top_Results_Nodes <- 
       RWRM_Result_Object$RWRM_Results$NodeNames[seq_len(k)]
     Query_Nodes <- c(RWRM_Result_Object$Seed_Nodes,Top_Results_Nodes)
     
-    Induced_Network <- 
-      dNetInduce(g=Multiplex_Network, nodes_query=Query_Nodes, knn=0, 
-                 remove.loops=FALSE, largest.comp=FALSE)
+    Induced_Network <- induce.query.subgraph(Multiplex_Network, Query_Nodes)
     return(Induced_Network)
   }
 
@@ -128,10 +125,10 @@ create.multiplexNetwork.topResults <-
 #' @author Alberto Valdeolivas Urbelz \email{alvaldeolivas@@gmail.com}
 #'
 #' @examples
-#' m1 <- igraph::graph(c(1,2,1,3,2,3), directed = FALSE)
-#' m2 <- igraph::graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
+#' m1 <- igraph::make_graph(c(1,2,1,3,2,3), directed = FALSE)
+#' m2 <- igraph::make_graph(c(1,3,2,3,3,4,1,4), directed = FALSE)
 #' multiObject_1 <- create.multiplex(list(m1=m1,m2=m2))
-#' h1 <- igraph::graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
+#' h1 <- igraph::make_graph(c("A","C","B","E","E","D","E","C"), directed = FALSE)
 #' multiObject_2 <- create.multiplex(list(h1=h1))
 #' bipartite_relations <- data.frame(m=c(1,3),h=c("A","E"))
 #' multiHetObject <- 
@@ -146,7 +143,6 @@ create.multiplexNetwork.topResults <-
 #'     bipartite_relations)
 #'
 #'@import igraph
-#'@importFrom dnet dNetInduce
 #'@export
 
 create.multiplexHetNetwork.topResults <- 
@@ -237,7 +233,7 @@ create.multiplexHetNetwork.topResults <-
       rbind.data.frame(Multiplex1_df,Multiplex2_df,bipartite_relations)
     
     Multiplex_Heterogeneous_Network <-
-      graph.data.frame(Multiplex_Heterogeneous_df,directed=FALSE)
+      graph_from_data_frame(Multiplex_Heterogeneous_df, directed = FALSE)
     
     Top_Results_MultiNodes <-
       RWRMH_Results_Object$RWRMH_Multiplex1$NodeNames[seq_len(k)]
@@ -247,8 +243,7 @@ create.multiplexHetNetwork.topResults <-
     Query_Nodes <- c(RWRMH_Results_Object$Seed_Nodes,Top_Results_MultiNodes,
                      Top_Results_SecondNetNodes)
     
-    Induced_Network <- 
-      dNetInduce(g=Multiplex_Heterogeneous_Network, nodes_query=Query_Nodes, 
-                 knn=0,remove.loops=FALSE, largest.comp=FALSE)
+    Induced_Network <-
+      induce.query.subgraph(Multiplex_Heterogeneous_Network, Query_Nodes)
     return(Induced_Network)
     }
