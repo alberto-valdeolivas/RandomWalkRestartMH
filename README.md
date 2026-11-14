@@ -2,6 +2,10 @@
 
 # RandomWalkRestartMH: An R package to perform Random Walk with Restart
 
+Developed by [Alberto Valdeolivas](https://alberto-valdeolivas.github.io/)
+and collaborators. Read the [research overview](https://alberto-valdeolivas.github.io/projects/random-walk-restart/)
+for the context behind the package.
+
 
 ## Overview 
 
